@@ -1,0 +1,33 @@
+#custom-search-input
+{
+    float: right;
+    width: 200px;
+}
+
+#custom-search-input .btn-danger
+{
+    margin-right: 20px;
+    padding: 9px 11px;
+}
+
+.add
+{
+    color: green;
+}
+
+.glyphicon
+{
+    cursor: pointer;
+}
+
+.label {
+    float: right;
+    padding: 8px 15px;
+    margin-right: 20px;
+    margin-top: 3px;
+}
+
+.glyphicon.glyphicon-remove
+{
+    margin-left: 5px;
+}

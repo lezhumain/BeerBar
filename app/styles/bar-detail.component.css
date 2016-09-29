@@ -1,0 +1,29 @@
+.barInfoLine
+{
+    margin: 10px;
+}
+
+.barInfoLabel
+{
+    font-weight: bold;
+}
+
+.barBeers
+{
+    margin-top: 40px;
+}
+
+.barBeers table
+{
+    width: 300px;
+}
+
+.add
+{
+    color: green;
+}
+
+.glyphicon
+{
+    cursor: pointer;
+}

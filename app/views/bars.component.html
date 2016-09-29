@@ -1,0 +1,39 @@
+<!--<my-bar-detail [bar]="selectedBar"></my-bar-detail>-->
+<div class="header">
+    <div id="custom-search-input">
+        <div class="input-group col-md-12">
+            <input #searchValue type="search" placeholder="Search for beer" class="  search-query form-control">
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-danger" (click)="search(searchValue.value)">
+                    <span class=" glyphicon glyphicon-search"></span>
+                </button>
+            </span>
+        </div>
+    </div>
+    <span *ngIf="filterValue" class="label label-primary">
+        {{filterValue}}
+        <span class="glyphicon glyphicon-remove" (click)="removeFilter()"></span>
+    </span>
+
+    <h2>BarList</h2>
+</div>
+<table class="table table-striped table-hover" >
+    <tr>
+        <th>Nom</th>
+        <th>Ville</th>
+        <th>Nb bières</th>
+    </tr>
+    <!-- '*' indicates master template -->
+    <!--<tr *ngFor="let bar of bars" [class.selected]="bar === selectedBar" (click)="onSelect(bar)">-->
+    <!--<tr *ngFor="let bar of bars | hasbeerfilter:toRemove" [class.selected]="bar === selectedBar" (click)="onSelect(bar)">-->
+    <tr *ngFor="let bar of filteredBars" [class.selected]="bar === selectedBar" (click)="onSelect(bar)">
+        <td>{{bar.name}}</td>
+        <td>{{bar.city}}</td>
+        <td>{{bar.beers.length}}</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td> <a routerLink="/bar/create"><span class="glyphicon glyphicon-plus add"></span></a> </td>
+    </tr>
+</table>

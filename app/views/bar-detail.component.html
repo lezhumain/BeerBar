@@ -1,0 +1,67 @@
+<div class="header">
+
+    <!-- back on right button -->
+    <button id="back" type="button" class="btn btn-primary" (click)="navigate('/bars')">Back</button>
+
+    <h2>Bar Details</h2>
+</div>
+<div *ngIf="bar">
+    <div class="mainContent">
+        <div class="barInfoLine">
+            <span class="barInfoLabel">Nom:</span>
+            <span class="value">{{bar.name}}</span>
+        </div>
+        <div class="barInfoLine">
+            <span class="barInfoLabel">Adresse:</span>
+            <span class="value">{{bar.address}}</span>
+        </div>
+        <div class="barInfoLine">
+            <span class="barInfoLabel">Ville:</span>
+            <span class="value">{{bar.city}}</span>
+        </div>
+        <!--<div class="barInfoLine">-->
+            <!--<span class="barInfoLabel">Code Postal:</span>-->
+            <!--<span class="value">{{bar.id}}</span>-->
+        <!--</div>-->
+        <div class="barInfoLine">
+            <span class="barInfoLabel">Description:</span>
+            <span class="value">{{bar.description}}</span>
+        </div>
+
+        <div class="barBeers">
+            <h4>Bières du bar</h4>
+
+            <div *ngIf="bar.beers.length !== 0">
+                <table class="table table-striped table-hover" >
+                    <tr>
+                        <th>Nom</th>
+                        <th>Type</th>
+                        <th>Degré</th>
+                    </tr>
+                    <!--<tr >-->
+                    <tr *ngFor="let beer of bar.beers">
+                        <td>{{beer.name}}</td>
+                        <td>Blonde</td>
+                        <td>{{beer.degree}}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <!--<a routerLink="/beer/create">-->
+                            <a (click)="gotoCreateBeer()">
+                                <span class="glyphicon glyphicon-plus add" ></span>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div *ngIf="bar.beers.length === 0">
+                <span>Aucune bière dans ce bar...</span>
+                <a (click)="gotoCreateBeer()">
+                    <span class="glyphicon glyphicon-plus add" ></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
