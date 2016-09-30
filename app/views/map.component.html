@@ -1,8 +1,10 @@
+
 <h1>{{ title }}</h1>
+
+
 
 <!-- this creates a google map on the page with the given lat/lng from -->
 <!-- the component as the initial center of the map: -->
-
 <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="15">
     <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
     <sebm-google-map-marker *ngFor="let marker of markers" [latitude]="marker.lat" [longitude]="marker.lng"></sebm-google-map-marker>

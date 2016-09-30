@@ -46,29 +46,19 @@ export class BarAddComponent implements OnInit {
         this.bar.city = city;
         console.log(this.bar);
 
+
+        if (!name)
+            return;
+
+        console.log("method commented out");
         //this.barService.createBar(this.bar)
-        //    //.then(this.goBack);
-        //    .then(this.navigate("/bars"));
-
-
-        if (!name) { return; }
-        //this.barService.create(name)
         //    .then(bar => {
         //        console.log("bar-add.component.ts");
         //        console.log(bar);
+        //        //debugger;
         //        //this.bars.push(bar);
         //        //this.selectedBar = null;
         //        this.navigate("/bars");
         //    });
-
-        this.barService.createBar(this.bar)
-            .then(bar => {
-                console.log("bar-add.component.ts");
-                console.log(bar);
-                //debugger;
-                //this.bars.push(bar);
-                //this.selectedBar = null;
-                this.navigate("/bars");
-            });
     }
 }

@@ -10,8 +10,8 @@ import { routing } from './app.routing';
 import './rxjs-extensions';
 
 // Imports for loading & configuring the in-memory web api
-import { InMemoryWebApiModule } from 'angular2-in-memory-web-api';
-import { InMemoryDataService }	from './services/in-memory-data.service';
+//import { InMemoryWebApiModule } from 'angular2-in-memory-web-api';
+//import { InMemoryDataService }	from './services/in-memory-data.service';
 import {BarSearchComponent} from "./components/bar-search.component";
 import {BarAddComponent} from "./components/bar-add.component";
 import {BeerAddComponent} from "./components/beer-add.component";
@@ -26,7 +26,7 @@ import {GoomapService} from "./services/goomap.service";
 		BrowserModule,
 		FormsModule,
 		HttpModule,
-		InMemoryWebApiModule.forRoot(InMemoryDataService),
+		//InMemoryWebApiModule.forRoot(InMemoryDataService),
 		routing,
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyDOoBhiWusApq1Od-vMIRZrnRO-G2GB62A',

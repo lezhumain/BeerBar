@@ -20,7 +20,7 @@ export class GoomapService {
     private nearbyUrl : string = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json';  // URL to web api
     private apiKey: string = "AIzaSyDOoBhiWusApq1Od-vMIRZrnRO-G2GB62A";
 
-    private headerstes = new Headers({'Content-Type': 'application/json'});
+    //private headerstes = new Headers({'Content-Type': 'application/json', 'Accept': 'application/json', 'Origin': ''});
 
 
     MARKERS: IMarker[] = [
@@ -44,17 +44,16 @@ export class GoomapService {
     // getAll(): Observable<Person[]>{
     //     let people$ = this.http
     //         .get(`${this.baseUrl}/people`, {headers: this.getHeaders()})
-    //         .map(mapPersons);
+    //         .map(mapObjs);
     //     return people$;
     // }
 
     getAll(): Observable<{}>{
         let url = this.baseUrl + this.peopleUrl;
 
-        debugger;
         let people$ = this.http
             .get(url, {headers: this.getHeaders()})
-            .map(this.mapPersons);
+            .map(this.mapObjs);
         return people$;
     }
 
@@ -66,64 +65,64 @@ export class GoomapService {
     private getHeaders(){
         let headers = new Headers();
         headers.append('Accept', 'application/json');
+        //headers.append('Content-Type', 'application/json');
+        //headers.append('Origin', '');
+
         return headers;
     }
 
-    private mapPersons(response:Response): Array<any>{
+    private mapObjs(response:Response): Array<any>{
         // The response of the API has a results
         // property with the actual results
         debugger;
-        return response.json().results.map(this.toPerson)
-    }
-
-
-    private toPerson(r:any): {}{
-        let person = <{}>({
-            id: this.extractId(r),
-            url: r.url,
-            name: r.name,
-            weight: r.mass,
-            height: r.height,
-        });
-        console.log('Parsed person:', person);
-        return person;
+        var self = this;
+        return response.json().results.map(resp => {
+            //debugger;
+            console.log('Parsed response:', resp);
+            return resp;
+        })
     }
 
     // to avoid breaking the rest of our app
     // I extract the id from the person url
-    private extractId(personData:any){
-        let extractedId = personData.url.replace('http://swapi.co/api/people/','').replace('/','');
-        return parseInt(extractedId);
-    }
+    //private extractId(personData:any){
+    //    let extractedId = personData.url.replace('http://swapi.co/api/people/','').replace('/','');
+    //    return parseInt(extractedId);
+    //}
 
 
 
-    // getPlacesTest(geoloc: string, types: string, rad: number): any {
-    //     // Parameters obj-
-    //     let params: URLSearchParams = new URLSearchParams();
-    //     params.set('key', this.apiKey);
-    //     params.set('location', geoloc);
-    //     params.set('radius', rad.toString());
-    //     params.set('types', types);
-    //
-    //     debugger;
-    //     // return this.http.get(this.nearbyUrl, {
-    //     //             search: params
-    //     //         })
-    //     //         .toPromise()
-    //     //         .then(response => response.json().data)
-    //     //         .catch(this.handleError);
-    //
-    //     //this.jsonp
-    //     //    .get(this.nearbyUrl, { search: params })
-    //     //    .toPromise()
-    //     //    .then(response => response.json().data)
-    //     //    .catch(this.handleError);
-    //
-    //     let url = this.baseUrl + this.peopleUrl;
-    //     return this.http.get(url)
-    //         .map(response => response.json());
-    // }
+     getPlacesTest(geoloc: string, types: string, rad: number): Promise<any> {
+         // Parameters obj-
+         let params: URLSearchParams = new URLSearchParams();
+         params.set('key', this.apiKey);
+         params.set('location', geoloc);
+         params.set('radius', rad.toString());
+         params.set('types', types);
+
+         debugger;
+          return this.http.get(this.nearbyUrl, {
+                        search: params,
+                        headers: this.getHeaders()
+                  })
+                  .toPromise()
+                  .then(response => {
+                      debugger;
+                      let data = response.json().data
+                      return data;
+                  })
+                  .catch(this.handleError);
+
+         //this.jsonp
+         //    .get(this.nearbyUrl, { search: params })
+         //    .toPromise()
+         //    .then(response => response.json().data)
+         //    .catch(this.handleError);
+
+         //let url = this.baseUrl + this.peopleUrl;
+         //return this.http.get(url)
+         //    .map(response => response.json());
+     }
 
     // private getHeaders(){
     //     let headers = new Headers();

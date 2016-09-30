@@ -82,12 +82,13 @@ export class BeerAddComponent implements OnInit {
         }
 
         let self = this;
-        this.barService.update(this.bar)
-            .then(bar => {
-                console.log("beer-add.component.ts");
-                console.log(bar);
-                //debugger;
-                self.navigate("/detail/" + this.bar.id);
-            });
+        console.log("method commented out");
+        //this.barService.update(this.bar)
+        //    .then(bar => {
+        //        console.log("beer-add.component.ts");
+        //        console.log(bar);
+        //        //debugger;
+        //        self.navigate("/detail/" + this.bar.id);
+        //    });
     }
 }

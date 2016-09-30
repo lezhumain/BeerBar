@@ -6,6 +6,6 @@
 export interface IMarker {
     lat: number;
     lng: number;
-    label?: string;
+    label: string;
     draggable: boolean;
 }

@@ -60,7 +60,8 @@ export class BarDetailComponent implements OnInit {
     };
 
     save(): void {
-        this.barService.update(this.bar)
-            .then(this.goBack);
+        console.log("method commented out");
+        //this.barService.update(this.bar)
+        //    .then(this.goBack);
     }
 }

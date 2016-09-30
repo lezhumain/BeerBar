@@ -79,25 +79,25 @@ export class BarsComponent implements OnInit
     };
 
 
-    add(name: string): void {
-        name = name.trim();
-        if (!name) { return; }
-        this.barService.create(name)
-            .then(bar => {
-                //this.bars.push(bar);
-                this.selectedBar = null;
-                this.getBars();
-            });
-    };
+    //add(name: string): void {
+    //    name = name.trim();
+    //    if (!name) { return; }
+    //    this.barService.create(name)
+    //        .then(bar => {
+    //            //this.bars.push(bar);
+    //            this.selectedBar = null;
+    //            this.getBars();
+    //        });
+    //};
 
-    delete(bar: Bar): void {
-        this.barService
-            .delete(bar.id)
-            .then(() => {
-                this.bars = this.bars.filter(h => h !== bar);
-                if (this.selectedBar === bar) { this.selectedBar = null; }
-            });
-    }
+    //delete(bar: Bar): void {
+    //    this.barService
+    //        .delete(bar.id)
+    //        .then(() => {
+    //            this.bars = this.bars.filter(h => h !== bar);
+    //            if (this.selectedBar === bar) { this.selectedBar = null; }
+    //        });
+    //}
 
     search(searchValue : string): void {
         var self = this;
