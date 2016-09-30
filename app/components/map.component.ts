@@ -30,6 +30,8 @@ export class MapComponent {
     mapService: GoomapService;
     map: mapTypes.GoogleMap;
     markers: IMarker[];
+    //positionIconUrl: string = "http://www.googlemapsmarkers.com/v1/P/0099FF/";
+    positionIconUrl: string = "https://www.robotwoods.com/dev/misc/bluecircle.png";
     //hiddenMap:
 
     //service = new google.maps.places.PlacesService(map);
@@ -97,6 +99,10 @@ export class MapComponent {
     //         });
     //
     //};
+
+    private clickedMarker(label: string, index: number) {
+        console.log(`clicked the marker: ${label || index}`)
+    }
 
     private onGotLocation(position: Position, self: MapComponent): void
     {
