@@ -22,17 +22,19 @@ import {IMarker} from "../model/imarker";
 //export interface Window { google: any; }
 
 export class MapComponent {
-    title: string = 'My first angular2-google-maps project';
+    title: string = 'Bars autour de moi';
 
     lat: number = 51.678418;
     lng: number = 7.809007;
+    zoom: number = 16;
     geoloc: Coordinates;
     mapService: GoomapService;
     map: mapTypes.GoogleMap;
     markers: IMarker[];
     //positionIconUrl: string = "http://www.googlemapsmarkers.com/v1/P/0099FF/";
     positionIconUrl: string = "https://www.robotwoods.com/dev/misc/bluecircle.png";
-    //hiddenMap:
+    info: string = "";
+    searchRadius: number = 300;
 
     //service = new google.maps.places.PlacesService(map);
 
@@ -52,6 +54,7 @@ export class MapComponent {
 
         let self = this;
         this._wrapper.getNativeMap().then((m) => {
+            debugger;
             self.map = m;
             //console.log(m);
         });
@@ -65,19 +68,10 @@ export class MapComponent {
     };
 
     ngOnInit(): void {
-        //this.initMap();
-        //this.getMarkers();
 
-        // this.service
-        //     .getAll()
-        //     .subscribe(p => {
-        //         console.log(p);
-        //         debugger;
-        //     }, msg => {
-        //         console.log("error");
-        //         console.log(msg);
-        //     });
         var self = this;
+
+        // make calls to getLocation every 22s
         setInterval(() => {
             self.getLocation();
             console.log("Just updated geolocation");
@@ -100,8 +94,9 @@ export class MapComponent {
     //
     //};
 
-    private clickedMarker(label: string, index: number) {
-        console.log(`clicked the marker: ${label || index}`)
+    private clickedMarker(label: string) {
+        console.log(`clicked the marker: ${label}`);
+        this.info = label;
     }
 
     private onGotLocation(position: Position, self: MapComponent): void
@@ -209,17 +204,19 @@ export class MapComponent {
             newMap.setAttribute("style", "display: none;");
 
             body.insertBefore(newMap, firstChild);
-        }
+        };
 
         var initMap = function()
         {
+            preInitMap();
+
             //var pyrmont = {lat: -33.867, lng: 151.195};
-            var pyrmont = {lat: self.geoloc.latitude, lng: self.geoloc.longitude};
-            var radius = 250;
+            var currentLoc = {lat: self.geoloc.latitude, lng: self.geoloc.longitude};
+            // var radius = 250;
             var types = ["bar"];
 
             self.map = new gooogle.maps.Map(document.getElementById('map1'), {
-                center: pyrmont,
+                center: currentLoc,
                 zoom: 15
             });
 
@@ -227,11 +224,11 @@ export class MapComponent {
 
             let service = new gooogle.maps.places.PlacesService(self.map);
             service.nearbySearch({
-                location: pyrmont,
-                radius: radius,
+                location: currentLoc,
+                radius: self.searchRadius,
                 types: types
             }, callback);
-        }
+        };
 
         var createMarker = function(data)
         {
@@ -250,7 +247,7 @@ export class MapComponent {
             };
 
             self.markers.push(marker);
-        }
+        };
 
         var callback = function(results, status)
         {
@@ -262,9 +259,9 @@ export class MapComponent {
                     createMarker(results[i]);
                  }
 
-                console.log("got markers");
+                console.log("Got markers");
             }
-        }
+        };
         /*
          function createMarker(place) {
          var placeLoc = place.geometry.location;
@@ -281,7 +278,7 @@ export class MapComponent {
          */
 
         //debugger;
-        preInitMap();
+        //preInitMap();
         initMap();
     }
 }
