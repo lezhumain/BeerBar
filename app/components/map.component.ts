@@ -179,7 +179,7 @@ export class MapComponent {
     //    });
     //}
 
-    private placesHack(): void
+    private placesHack(radius: number): void
     {
         //var map;
         var infowindow;
@@ -188,6 +188,9 @@ export class MapComponent {
 
         if(!gooogle || gooogle === null)
             return;
+
+        if(radius)
+            self.searchRadius = radius;
 
         var preInitMap = function()
         {
@@ -222,12 +225,16 @@ export class MapComponent {
 
             infowindow = new gooogle.maps.InfoWindow();
 
-            let service = new gooogle.maps.places.PlacesService(self.map);
-            service.nearbySearch({
+            var params = {
                 location: currentLoc,
                 radius: self.searchRadius,
                 types: types
-            }, callback);
+            };
+            console.log("nearby params:")
+            console.log(params);
+
+            let service = new gooogle.maps.places.PlacesService(self.map);
+            service.nearbySearch(params, callback);
         };
 
         var createMarker = function(data)

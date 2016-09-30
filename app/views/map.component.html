@@ -19,3 +19,12 @@
     </sebm-google-map-marker>
 
 </sebm-google-map>
+
+
+<form class="form-horizontal" class="form-inline">
+    <div class="form-group">
+        <label class="control-label" for="fRadius">Rayon de recherche:</label>
+        <input id="fRadius" #radius type="number" class="form-control" placeholder="" [value]="searchRadius">
+    </div>
+    <button type="submit" class="btn btn-default" (click)="placesHack(radius.value)">Submit</button>
+</form>
