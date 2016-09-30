@@ -42,7 +42,7 @@ export class BarDetailComponent implements OnInit {
         //console.log(this.bar.beers);
     };
 
-    goBack(): void {
+    static goBack(): void {
         window.history.back();
     };
 

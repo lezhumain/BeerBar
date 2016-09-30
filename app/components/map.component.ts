@@ -6,7 +6,6 @@ import { GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
 import {GoomapService} from "../services/goomap.service";
 import {IMarker} from "../model/imarker";
 
-//import {Jsonp} from "@angular/http";
 
 @Component({
     selector: 'mymap',
@@ -18,8 +17,6 @@ import {IMarker} from "../model/imarker";
 //export interface Window {
 //    google: any;
 //}
-
-//export interface Window { google: any; }
 
 export class MapComponent {
     title: string = 'Bars autour de moi';
@@ -94,9 +91,19 @@ export class MapComponent {
     //
     //};
 
-    private clickedMarker(label: string) {
+    //noinspection JSUnusedLocalSymbols
+    private clickedMarker(label: string): void {
         console.log(`clicked the marker: ${label}`);
         this.info = label;
+    }
+
+    private centerMap(): void
+    {
+        // TODO
+        // console.log("not implemented");
+        // debugger;
+        this.lat = this.geoloc.latitude;
+        this.lng = this.geoloc.longitude;
     }
 
     private onGotLocation(position: Position, self: MapComponent): void
@@ -109,7 +116,7 @@ export class MapComponent {
         self.lat = position.coords.latitude;
         self.lng = position.coords.longitude;
 
-        this.placesHack();
+        self.placesHack();
         //(function() {
         //    setInterval(() => {
         //        self.checkMarkers();
@@ -122,7 +129,7 @@ export class MapComponent {
         }, 10000);
     }
 
-    private onErrorLocation(val: any): void
+    private static onErrorLocation(val: any): void
     {
         console.log("Geolocation is not supported by this browser.");
         console.log(val);
@@ -132,11 +139,12 @@ export class MapComponent {
         if (navigator.geolocation) {
             var self = this;
             // let loc = navigator.geolocation.getCurrentPosition(this.onGotLocation, this.onErrorLocation);
-            let loc = navigator.geolocation.getCurrentPosition(function(position){
+
+            navigator.geolocation.getCurrentPosition(function(position){
                 self.onGotLocation(position, self);
             },
             function(val){
-                self.onErrorLocation(val);
+                MapComponent.onErrorLocation(val);
             });
         }
 
@@ -179,7 +187,7 @@ export class MapComponent {
     //    });
     //}
 
-    private placesHack(radius: number): void
+    private placesHack(radius?: number): void
     {
         //var map;
         var infowindow;
@@ -200,7 +208,7 @@ export class MapComponent {
 
 
             var body = document.getElementsByTagName("mymap")[0];
-            var firstChild = body.childNodes[0]
+            var firstChild = body.childNodes[0];
             var newMap = document.createElement("div");
 
             newMap.setAttribute("id", "map1");
@@ -230,8 +238,8 @@ export class MapComponent {
                 radius: self.searchRadius,
                 types: types
             };
-            console.log("nearby params:")
-            console.log(params);
+            // console.log("nearby params:");
+            // console.log(params);
 
             let service = new gooogle.maps.places.PlacesService(self.map);
             service.nearbySearch(params, callback);
@@ -240,11 +248,6 @@ export class MapComponent {
         var createMarker = function(data)
         {
             //console.log(data);
-
-            //var marker = new IMarker();
-            //marker.lat = data.geometry.location.lat();
-            //marker.lng = data.geometry.location.lng();
-            //marker.label = data.name;
 
             var marker = {
                 lat : data.geometry.location.lat(),
@@ -269,23 +272,7 @@ export class MapComponent {
                 console.log("Got markers");
             }
         };
-        /*
-         function createMarker(place) {
-         var placeLoc = place.geometry.location;
-         var marker = new google.maps.Marker({
-         map: map,
-         position: place.geometry.location
-         });
 
-         google.maps.event.addListener(marker, 'click', function() {
-         infowindow.setContent(place.name);
-         infowindow.open(map, this);
-         });
-         }
-         */
-
-        //debugger;
-        //preInitMap();
         initMap();
     }
 }

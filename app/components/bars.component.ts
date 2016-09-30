@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {Location} from '@angular/common';
 import {Bar} from "../model/bar";
 import { OnInit } from '@angular/core';
 import { BarService } from '../services/bar.service';

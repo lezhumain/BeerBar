@@ -12,3 +12,9 @@ input[type=number]
 {
     width: 80px;
 }
+
+button>img
+{
+    width: 24px;
+    height: 25px;
+}

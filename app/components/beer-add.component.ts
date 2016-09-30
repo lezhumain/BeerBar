@@ -32,26 +32,11 @@ export class BeerAddComponent implements OnInit {
     };
 
     ngOnInit(): void {
-        //let referrer = document.referrer.split('/');
-        //let id = referrer[referrer.length - 1];
-        //
-        //console.log(id);
-        //this.barId = +id;
-        //
-        //debugger;
-        //if(isNaN(this.id))
-        //{
-        //    console.log("aucun id bar...");
-        //    this.navigate("/bars");
-        //}
-        //else
-        //    console.log("id bar = " + this.barId);
-
         this.route.params.forEach((params: Params) => {
             let name = params['bar'].replace("%%", "=");
 
             if(!name)
-                this.goBack();
+                BeerAddComponent.goBack();
 
             this.barName = atob(name);
             //debugger;
@@ -60,10 +45,11 @@ export class BeerAddComponent implements OnInit {
         });
     };
 
-    goBack(): void {
+    static goBack(): void {
         window.history.back();
     };
 
+    //noinspection JSUnusedLocalSymbols
     private navigate(url: string): void{
         this.router.navigate([url]);
     };
@@ -71,7 +57,7 @@ export class BeerAddComponent implements OnInit {
     save(name: string, degre: number): void {
         this.beer.name = name;
         this.beer.degree = degre ? degre : 0;
-        console.log(this.beer);
+        // console.log(this.beer);
 
         this.bar.beers.push(this.beer);
 
@@ -81,7 +67,7 @@ export class BeerAddComponent implements OnInit {
             return;
         }
 
-        let self = this;
+        // let self = this;
         console.log("method commented out");
         //this.barService.update(this.bar)
         //    .then(bar => {
