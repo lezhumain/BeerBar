@@ -83,8 +83,7 @@ export class MapComponent {
         console.log("Got location: ");
         console.log(position);
 
-        self.geoloc = position.coords;
-
+        self.adjustGeoloc(position.coords);
         self.centerMap();
 
         self.placesHack();
@@ -95,18 +94,38 @@ export class MapComponent {
         }, 10000);
     }
 
-    private centerMap(): void{
-        //debugger;
+    private adjustGeoloc(position: Coordinates): void{
         let callsCount = MapComponent.locationCallsCount;
+        let lat: number;
+        let lng: number;
+        let accuracy: number;
+
         if(callsCount === 1) {
-            this.lat = position.coords.latitude;
-            this.lng = position.coords.longitude;
+            lat = position.latitude;
+            lng = position.longitude;
+            accuracy = position.accuracy;
         }
         else {
-            this.lat = (this.lat * (callsCount - 1) + position.coords.latitude) / callsCount;
-            this.lng = (this.lng * (callsCount - 1) + position.coords.longitude) / callsCount;
+            lat = (this.geoloc.latitude * (callsCount - 1) + position.latitude) / callsCount;
+            lng = (this.geoloc.longitude * (callsCount - 1) + position.longitude) / callsCount;
+            accuracy = (this.geoloc.accuracy * (callsCount - 1) + position.accuracy) / callsCount;
         }
+
+        this.geoloc = {
+            accuracy: accuracy,
+            altitude: position.altitude,
+            altitudeAccuracy: position.altitudeAccuracy,
+            heading: position.heading,
+            latitude: lat,
+            longitude: lng,
+            speed: position.speed,
+        };
+    }
+
+    private centerMap(): void{
         //debugger;
+        this.lat = this.geoloc.latitude;
+        this.lng = this.geoloc.longitude;
     }
 
     private static onErrorLocation(val: any): void
