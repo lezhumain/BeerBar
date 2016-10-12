@@ -19,6 +19,8 @@ import {MapComponent} from "./components/map.component";
 
 import { AgmCoreModule } from 'angular2-google-maps/core';
 import {GoomapService} from "./services/goomap.service";
+import {MyCustomMapsComponent} from "./components/my-custom-maps.component";
+import {CustomMapComponent} from "./components/custom-map.component";
 
 
 @NgModule({
@@ -40,7 +42,9 @@ import {GoomapService} from "./services/goomap.service";
 		BeerAddComponent,
 		BarsComponent,
 		BarSearchComponent,
-        MapComponent
+        MapComponent,
+		MyCustomMapsComponent,
+		CustomMapComponent
 	],
 	providers: [
 		BarService,

@@ -9,6 +9,8 @@ import {BarDetailComponent} from "./components/bar-detail.component";
 import {BarAddComponent} from "./components/bar-add.component";
 import {BeerAddComponent} from "./components/beer-add.component";
 import {MapComponent} from "./components/map.component";
+import {MyCustomMapsComponent} from "./components/my-custom-maps.component";
+import {CustomMapComponent} from "./components/custom-map.component";
 
 const appRoutes: Routes = [
     {
@@ -35,6 +37,14 @@ const appRoutes: Routes = [
     {
         path: 'beer/create/:bar',
         component: BeerAddComponent
+    },
+    {
+        path: 'test',
+        component: MyCustomMapsComponent
+    },
+    {
+        path: 'test1',
+        component: CustomMapComponent
     },
 ];
 

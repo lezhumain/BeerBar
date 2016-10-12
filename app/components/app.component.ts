@@ -2,6 +2,7 @@
  * Created by Dju on 09/09/2016.
  */
 import { Component } from '@angular/core';
+import {MyCustomMapsComponent} from "./my-custom-maps.component";
 
 @Component({
     selector: 'my-app',
@@ -25,7 +26,8 @@ import { Component } from '@angular/core';
             <router-outlet></router-outlet>
             <!--<router-outlet [geoloc]="{{location}}"></router-outlet>-->
         </div>
-    `
+    `,
+    //directives : [MyCustomMapsComponent]
 })
 
 export class AppComponent {

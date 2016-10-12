@@ -5,6 +5,7 @@ import { OnInit } from '@angular/core';
 import { BarService } from '../services/bar.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import {Observable} from "rxjs/Observable";
+import {CustomMapComponent} from "./custom-map.component";
 
 
 @Component({
@@ -12,7 +13,8 @@ import {Observable} from "rxjs/Observable";
 
     templateUrl:'app/views/bars.component.html',
     styleUrls:  ['app/styles/bars.component.css'],
-    providers: [BarService]
+    providers: [BarService],
+    //directives: [CustomMapComponent]
 })
 
 export class BarsComponent implements OnInit

@@ -5,6 +5,10 @@ import * as mapTypes from 'angular2-google-maps/core/services/google-maps-types'
 import { GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
 import {GoomapService} from "../services/goomap.service";
 import {IMarker} from "../model/imarker";
+import {CustomMapComponent} from "./custom-map.component";
+
+//import {MyCustomMapsComponent} from "./my-custom-maps.component";
+//import {CustomMapComponent} from "./custom-map.component";
 
 //import {Jsonp} from "@angular/http";
 
@@ -12,7 +16,9 @@ import {IMarker} from "../model/imarker";
     selector: 'mymap',
     templateUrl: 'app/views/map.component.html',
     styleUrls: ['app/styles/map.component.css'],
-    providers: [GoogleMapsAPIWrapper]
+    providers: [GoogleMapsAPIWrapper],
+    //directives : [MyCustomMapsComponent],
+    //directives: [CustomMapComponent]
 })
 
 //export interface Window {
@@ -32,7 +38,8 @@ export class MapComponent {
     markers: IMarker[];
     //positionIconUrl: string = "http://www.googlemapsmarkers.com/v1/P/0099FF/";
     positionIconUrl: string = "https://www.robotwoods.com/dev/misc/bluecircle.png";
-    //hiddenMap:
+
+    static locationCallsCount: number = 0;
 
     //service = new google.maps.places.PlacesService(map);
 
@@ -51,17 +58,19 @@ export class MapComponent {
         ulMenu.children[1].className="active";
 
         let self = this;
-        this._wrapper.getNativeMap().then((m) => {
-            self.map = m;
-            //console.log(m);
-        });
 
-        //this._wrapper.getNativeMap().then(function(m)
-        //{
+        //setTimeout(() => {
         //    debugger;
-        //    self.map = m;
-        //    console.log(m);
-        //});
+        //    this._wrapper.getNativeMap().then(function(m)
+        //    {
+        //        debugger;
+        //        self.map = m;
+        //        console.log(m);
+        //    }).catch(function(e) {
+        //         console.log(e);
+        //        debugger;
+        //    });
+        //}, 10000)
     };
 
     ngOnInit(): void {
@@ -106,13 +115,23 @@ export class MapComponent {
 
     private onGotLocation(position: Position, self: MapComponent): void
     {
+        MapComponent.locationCallsCount++;
+        let callsCount = MapComponent.locationCallsCount;
+
         //window.geoloc = position;
         console.log("Got location: ");
         console.log(position);
 
         self.geoloc = position.coords;
-        self.lat = position.coords.latitude;
-        self.lng = position.coords.longitude;
+
+        if(callsCount === 1) {
+            self.lat = position.coords.latitude;
+            self.lng = position.coords.longitude;
+        }
+        else {
+            self.lat = (self.lat * (callsCount - 1) + position.coords.latitude) / callsCount;
+            self.lng = (self.lng * (callsCount - 1) + position.coords.longitude) / callsCount;
+        }
 
         this.placesHack();
         //(function() {
