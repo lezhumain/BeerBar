@@ -52,6 +52,9 @@ export class CustomMapComponent implements OnInit {
         this._wrapper.getNativeMap().then( data => {
             console.log(data);
             debugger;
+        }).catch(e => {
+            console.log(e);
+            debugger;
         });
     }
 

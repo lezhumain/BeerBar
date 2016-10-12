@@ -1,3 +1,5 @@
+<!--<style type="text/css" src="dist/css/map-icons.css"></style>-->
+<!--<script type="text/javascript" src="dist/js/map-icons.js"></script>-->
 
 <h1>{{ title }}</h1>
 
@@ -13,12 +15,13 @@
     <sebm-google-map-marker [latitude]="lat" [longitude]="lng" [iconUrl]="positionIconUrl" ></sebm-google-map-marker>
 
     <sebm-google-map-marker *ngFor="let marker of markers" [latitude]="marker.lat"
-                            [longitude]="marker.lng" (markerClick)="clickedMarker(m.label)">
+                            [longitude]="marker.lng" (markerClick)="clickedMarker(marker.label)">
 
         <sebm-google-map-info-window>
-            <strong>InfoWindow content</strong>
+            <strong>{{marker.label}}</strong>
         </sebm-google-map-info-window>
 
     </sebm-google-map-marker>
 
 </sebm-google-map>
+<!--<button type="button" class="btn btn-primary"> <img id="imgPos" src="Maps-Center-Direction-icon.png"> </button>-->

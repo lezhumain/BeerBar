@@ -38,15 +38,13 @@ export class MapComponent {
     markers: IMarker[];
     //positionIconUrl: string = "http://www.googlemapsmarkers.com/v1/P/0099FF/";
     positionIconUrl: string = "https://www.robotwoods.com/dev/misc/bluecircle.png";
+    InfoWindowContent: string = "<InfoWindowContent>";
 
     static locationCallsCount: number = 0;
 
-    //service = new google.maps.places.PlacesService(map);
-
-    //var x = document.getElementById("demo");
-
     constructor(private _wrapper: GoogleMapsAPIWrapper,
-                private service: GoomapService){
+                private service: GoomapService)
+    {
         this.getLocation();
 
         this.mapService = service;
@@ -59,33 +57,9 @@ export class MapComponent {
 
         let self = this;
 
-        //setTimeout(() => {
-        //    debugger;
-        //    this._wrapper.getNativeMap().then(function(m)
-        //    {
-        //        debugger;
-        //        self.map = m;
-        //        console.log(m);
-        //    }).catch(function(e) {
-        //         console.log(e);
-        //        debugger;
-        //    });
-        //}, 10000)
     };
 
     ngOnInit(): void {
-        //this.initMap();
-        //this.getMarkers();
-
-        // this.service
-        //     .getAll()
-        //     .subscribe(p => {
-        //         console.log(p);
-        //         debugger;
-        //     }, msg => {
-        //         console.log("error");
-        //         console.log(msg);
-        //     });
         var self = this;
         setInterval(() => {
             self.getLocation();
@@ -93,24 +67,9 @@ export class MapComponent {
         }, 22000);
     };
 
-    //private getNearby(): void {
-    //    var self = this;
-    //
-    //    let geoloc = this.geoloc.latitude + "," + this.geoloc.longitude,
-    //        types = "bar";
-    //    let radius = 250;
-    //
-    //     this.mapService.getPlacesTest(geoloc, types, radius)
-    //         .then(function(result)
-    //         {
-    //             console.log("result");
-    //             console.log(result);
-    //         });
-    //
-    //};
-
     private clickedMarker(label: string, index: number) {
-        console.log(`clicked the marker: ${label || index}`)
+        console.log(`clicked the marker: ${label || index}`);
+        //this.InfoWindowContent = label;
     }
 
     private onGotLocation(position: Position, self: MapComponent): void
@@ -124,26 +83,28 @@ export class MapComponent {
 
         self.geoloc = position.coords;
 
-        if(callsCount === 1) {
-            self.lat = position.coords.latitude;
-            self.lng = position.coords.longitude;
-        }
-        else {
-            self.lat = (self.lat * (callsCount - 1) + position.coords.latitude) / callsCount;
-            self.lng = (self.lng * (callsCount - 1) + position.coords.longitude) / callsCount;
-        }
+        self.centerMap();
 
         this.placesHack();
-        //(function() {
-        //    setInterval(() => {
-        //        self.checkMarkers();
-        //        console.log("Just checked markers");
-        //    }, 3000);
-        //})();
+
         setInterval(() => {
             self.checkMarkers();
             console.log("Just checked markers");
         }, 10000);
+    }
+
+    private centerMap(): void{
+        //debugger;
+        let callsCount = MapComponent.locationCallsCount;
+        if(callsCount === 1) {
+            this.lat = position.coords.latitude;
+            this.lng = position.coords.longitude;
+        }
+        else {
+            this.lat = (this.lat * (callsCount - 1) + position.coords.latitude) / callsCount;
+            this.lng = (this.lng * (callsCount - 1) + position.coords.longitude) / callsCount;
+        }
+        //debugger;
     }
 
     private onErrorLocation(val: any): void
@@ -275,6 +236,9 @@ export class MapComponent {
         {
             if (status === gooogle.maps.places.PlacesServiceStatus.OK)
             {
+                while(self.markers.length > 0)
+                    self.markers.splice(0, 1);
+
                  for (var i = 0; i < results.length; i++)
                  {
                     //console.log(results[i]);
@@ -284,20 +248,6 @@ export class MapComponent {
                 console.log("got markers");
             }
         }
-        /*
-         function createMarker(place) {
-         var placeLoc = place.geometry.location;
-         var marker = new google.maps.Marker({
-         map: map,
-         position: place.geometry.location
-         });
-
-         google.maps.event.addListener(marker, 'click', function() {
-         infowindow.setContent(place.name);
-         infowindow.open(map, this);
-         });
-         }
-         */
 
         //debugger;
         preInitMap();
