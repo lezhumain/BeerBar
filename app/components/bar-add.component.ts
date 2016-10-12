@@ -1,6 +1,6 @@
 // Keep the Input import for now, we'll remove it later:
 import { Component, Input, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { BarService } from '../services/bar.service';
 import {Bar} from "../model/bar";
@@ -29,10 +29,11 @@ export class BarAddComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    goBack(): void {
+    static goBack(): void {
         window.history.back();
     }
 
+    //noinspection JSUnusedLocalSymbols
     private navigate(url: string): void{
         //route.n
         //window.location = url;

@@ -53,3 +53,4 @@ jspm_packages
 bower_components
 *.zip
 npm-debug.*
+*.orig
