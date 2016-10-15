@@ -11,6 +11,7 @@ import {BeerAddComponent} from "./components/beer-add.component";
 import {MapComponent} from "./components/map.component";
 import {MyCustomMapsComponent} from "./components/my-custom-maps.component";
 import {CustomMapComponent} from "./components/custom-map.component";
+import {LoginComponent} from "./components/login.component";
 
 const appRoutes: Routes = [
     {
@@ -19,7 +20,7 @@ const appRoutes: Routes = [
     },
     {
         path: '',
-        redirectTo: '/bars',
+        redirectTo: '/login',
         pathMatch: 'full'
     },
     {
@@ -45,6 +46,10 @@ const appRoutes: Routes = [
     {
         path: 'test1',
         component: CustomMapComponent
+    },
+    {
+        path: 'login',
+        component: LoginComponent
     },
 ];
 

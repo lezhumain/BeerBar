@@ -3,6 +3,8 @@
  */
 import { Component } from '@angular/core';
 import {MyCustomMapsComponent} from "./my-custom-maps.component";
+import {LoggedInRouterOutlet} from "../logged-in-router-outlet";
+import {UserService} from "../services/user.service";
 
 @Component({
     selector: 'my-app',
@@ -23,14 +25,25 @@ import {MyCustomMapsComponent} from "./my-custom-maps.component";
             </ul>
         </header>
         <div class="content">
-            <router-outlet></router-outlet>
+            <router-outlet (activate)='onRouteChange($event)' ></router-outlet>
+            <!--<loggedin-router-outlet></loggedin-router-outlet>-->
             <!--<router-outlet [geoloc]="{{location}}"></router-outlet>-->
         </div>
     `,
-    //directives : [MyCustomMapsComponent]
+    // directives: [LoggedInRouterOutlet]
 })
 
 export class AppComponent {
     title = 'Tour of Bars';
 
+    constructor(private userService: UserService){}
+
+    onRouteChange(event: any)
+    {
+        if(event.router.url !== "/login" &&
+            !this.userService.isLoggedIn())
+        {
+            event.router.navigate(["/login"]);
+        }
+    }
 }

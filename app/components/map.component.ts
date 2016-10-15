@@ -6,6 +6,8 @@ import { GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
 import {GoomapService} from "../services/goomap.service";
 import {IMarker} from "../model/imarker";
 import {CustomMapComponent} from "./custom-map.component";
+import {UserService} from "../services/user.service";
+import {Router} from "@angular/router";
 
 //import {MyCustomMapsComponent} from "./my-custom-maps.component";
 //import {CustomMapComponent} from "./custom-map.component";
@@ -40,7 +42,8 @@ export class MapComponent {
     static locationCallsCount: number = 0;
 
     constructor(private _wrapper: GoogleMapsAPIWrapper,
-                private service: GoomapService)
+                private service: GoomapService,
+                private router: Router)
     {
         this.getLocation();
 
@@ -68,6 +71,7 @@ export class MapComponent {
             console.log("Just updated geolocation");
         }, 22000);
     };
+
 
     private clickedMarker(label: string, index: number) {
         console.log(`clicked the marker: ${label || index}`);
@@ -267,7 +271,6 @@ export class MapComponent {
 
                  for (var i = 0; i < results.length; i++)
                  {
-                    //console.log(results[i]);
                     createMarker(results[i]);
                  }
 

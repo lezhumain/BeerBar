@@ -20,6 +20,9 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
 import {GoomapService} from "./services/goomap.service";
 import {MyCustomMapsComponent} from "./components/my-custom-maps.component";
 import {CustomMapComponent} from "./components/custom-map.component";
+import {LoginComponent} from "./components/login.component";
+import {UserService} from "./services/user.service";
+import {LoggedInRouterOutlet} from "./logged-in-router-outlet";
 
 
 @NgModule({
@@ -32,20 +35,23 @@ import {CustomMapComponent} from "./components/custom-map.component";
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyDOoBhiWusApq1Od-vMIRZrnRO-G2GB62A',
 			libraries: ['places']
-        })
+        }),
 	],
 	declarations: [
 		AppComponent,
 		BarDetailComponent,
 		BarAddComponent,
 		BeerAddComponent,
+		LoginComponent,
 		BarsComponent,
         MapComponent,
 		MyCustomMapsComponent,
-		CustomMapComponent
-	],
+		CustomMapComponent,
+        // LoggedInRouterOutlet
+    ],
 	providers: [
 		BarService,
+		UserService,
 		GoomapService
 	],
 	bootstrap: [ AppComponent ]
