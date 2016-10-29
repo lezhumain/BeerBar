@@ -3,25 +3,27 @@ import {Beer} from "./beer";
  * Created by ThaZalman on 08/09/2016.
  */
 export class Bar {
-    id: number;
+    barId: number;
     name: string;
     address: string;
     city: string;
-    /*
     postalCode: string;
     latitude: number;
     longitude: number;
-    */
     description: string;
-    beers: Beer[];
+    //beers: Beer[];
+    listBeer: Beer[];
 
     constructor()
     {
-        this.id = 0;
+        this.barId = 0;
         this.name = "";
         this.address = "";
         this.city = "";
+        this.postalCode = "";
+        this.latitude = 0;
+        this.longitude = 0;
         this.description = "";
-        this.beers = [];
+        this.listBeer = [];
     }
 }

@@ -42,24 +42,23 @@ export class BarAddComponent implements OnInit {
         this.router.navigate([url]);
     }
 
-    save(name: string, city: string): void {
+    save(name: string): void {
         this.bar.name = name;
-        this.bar.city = city;
-        console.log(this.bar);
-
+        //var data = "{\"name\": \"" + name +  "\"}";
 
         if (!name)
             return;
 
         console.log("method commented out");
-        //this.barService.createBar(this.bar)
+        console.log(name);
+        //this.barService.createBar(name)
         //    .then(bar => {
         //        console.log("bar-add.component.ts");
         //        console.log(bar);
         //        //debugger;
-        //        //this.bars.push(bar);
-        //        //this.selectedBar = null;
-        //        this.navigate("/bars");
+        //        this.bars.push(bar);
+        //        this.selectedBar = null;
+        //        //this.navigate("/bars");
         //    });
     }
 }

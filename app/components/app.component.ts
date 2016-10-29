@@ -34,16 +34,23 @@ import {UserService} from "../services/user.service";
 })
 
 export class AppComponent {
-    title = 'Tour of Bars';
+    title: string = 'Tour of Bars';
+    loggedIn: boolean = false;
 
     constructor(private userService: UserService){}
 
     onRouteChange(event: any)
     {
-        if(event.router.url !== "/login" &&
-            !this.userService.isLoggedIn())
+        let canAccess: boolean = event.router.url == "/login" ||
+                        this.userService.isLoggedIn();
+
+        if(!canAccess)
         {
-            event.router.navigate(["/login"]);
+            debugger;
+            //event.router.navigate(["/login"]);
         }
+        else if(this.userService.isLoggedIn())
+            this.loggedIn = true;
+
     }
 }

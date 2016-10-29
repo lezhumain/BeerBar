@@ -59,7 +59,7 @@ export class BeerAddComponent implements OnInit {
         this.beer.degree = degre ? degre : 0;
         // console.log(this.beer);
 
-        this.bar.beers.push(this.beer);
+        this.bar.listBeer.push(this.beer);
 
         //debugger;
         if (!name)

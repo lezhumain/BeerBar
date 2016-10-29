@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
                     console.log("wrong user");
                     self.showLoginError = true;
                 }
-                debugger;
+                //debugger;
         });
     }
 

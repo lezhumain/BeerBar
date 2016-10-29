@@ -34,14 +34,17 @@ export class LoggedInRouterOutlet extends RouterOutlet
 
     activate(activatedRoute: ActivatedRoute, loadedResolver: ComponentFactoryResolver, loadedInjector: Injector, providers: ResolvedReflectiveProvider[], outletMap: RouterOutletMap) {
         if (this._canActivate(activatedRoute.url)) {
+            debugger;
             return super.activate(activatedRoute, loadedResolver, loadedInjector, providers, outletMap);
         }
 
         // this.parentRouter.navigate(['Login']);
+        debugger;
         this.router.navigate(['login']);
     }
 
     _canActivate(url) {
+        debugger;
         return this.publicRoutes.indexOf(url) !== -1 || this.userService.isLoggedIn();
     }
 }

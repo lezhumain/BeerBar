@@ -35,11 +35,11 @@ export class BarDetailComponent implements OnInit {
                 //.then(function(bar)
                 //{
                 //    self.bar = bar;
-                //    //console.log(self.bar.beers.length);
+                //    //console.log(self.bar.listBeer.length);
                 //});
         });
 
-        //console.log(this.bar.beers);
+        //console.log(this.bar.listBeer);
     };
 
     static goBack(): void {

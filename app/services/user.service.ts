@@ -9,7 +9,7 @@ import {User} from "../model/user";
 export class UserService {
     private userUrl = 'app/login';  // URL to web api
     private headers = new Headers({'Content-Type': 'application/json'});
-    private loggedIn = false
+    private static loggedIn = false;
 
     private static users: User[] = [
         {id: 1, name: 'lez', password: "123lol"},
@@ -18,7 +18,10 @@ export class UserService {
 
     ];
 
-    constructor(private http: Http) { }
+    constructor(private http: Http) {
+        console.log("creation of UserService");
+        //debugger;
+    }
 
     // TODO: post
     login(name: string, pass: string): Promise<boolean>
@@ -39,13 +42,13 @@ export class UserService {
             }
         });
 
-        this.loggedIn = ok;
-        return Promise.resolve(ok);
+        UserService.loggedIn = ok;
+        return Promise.resolve(UserService.loggedIn);
     }
 
     isLoggedIn(): boolean
     {
-        return this.loggedIn;
+        return UserService.loggedIn;
     }
 
     private handleError(error: any): Promise<any> {

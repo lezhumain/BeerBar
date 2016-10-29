@@ -11,36 +11,47 @@ import {Beer} from "../model/beer";
 
 @Injectable()
 export class BarService {
-    private barsUrl = 'app/bars';  // URL to web api
+    //private barsUrl = 'app/bars';  // URL to web api
+    private barsUrl = 'http://davanture.fr:8080/bars';  // URL to web api
     private headers = new Headers({'Content-Type': 'application/json'});
 
-    private static bars: Bar[] = [
-        {id: 11, name: 'Mr. Nice', address: '', city: 'Le Puy en Velay', description: '', beers: [{id:1,name:"grimbergen",degree:6}]},
-        {id: 12, name: 'Narco', address: '', city: 'Le Puy en Velay', description: '', beers: []},
-        {id: 13, name: 'Bombasto', address: '', city: 'Le Puy en Velay', description: '', beers: []},
-        {id: 14, name: 'Celeritas', address: '', city: 'Le Puy en Velay', description: '', beers: []},
-        {id: 15, name: 'Magneta', address: '', city: 'Le Puy en Velay', description: '', beers: []},
-        {id: 16, name: 'RubberMan', address: '', city: 'Le Puy en Velay', description: '', beers: []},
-        {id: 17, name: 'Dynama', address: '', city: 'Le Puy en Velay', description: '', beers: []},
-        {id: 18, name: 'Dr IQ', address: '', city: 'Le Puy en Velay', description: '', beers: []},
-        {id: 19, name: 'Magma', address: '', city: 'Le Puy en Velay', description: '', beers: []},
-        {id: 20, name: 'Tornado', address: '', city: 'Le Puy en Velay', description: '', beers: []}
-    ];
+    //private static bars: Bar[] = [
+    //    {barId: 11, name: 'Mr. Nice', address: '', city: 'Le Puy en Velay', description: '', listBeer: [{barId:1,name:"grimbergen",degree:6}]},
+    //    {barId: 12, name: 'Narco', address: '', city: 'Le Puy en Velay', description: '', listBeer: []},
+    //    {barId: 13, name: 'Bombasto', address: '', city: 'Le Puy en Velay', description: '', listBeer: []},
+    //    {barId: 14, name: 'Celeritas', address: '', city: 'Le Puy en Velay', description: '', listBeer: []},
+    //    {barId: 15, name: 'Magneta', address: '', city: 'Le Puy en Velay', description: '', listBeer: []},
+    //    {barId: 16, name: 'RubberMan', address: '', city: 'Le Puy en Velay', description: '', listBeer: []},
+    //    {barId: 17, name: 'Dynama', address: '', city: 'Le Puy en Velay', description: '', listBeer: []},
+    //    {barId: 18, name: 'Dr IQ', address: '', city: 'Le Puy en Velay', description: '', listBeer: []},
+    //    {barId: 19, name: 'Magma', address: '', city: 'Le Puy en Velay', description: '', listBeer: []},
+    //    {barId: 20, name: 'Tornado', address: '', city: 'Le Puy en Velay', description: '', listBeer: []}
+    //];
 
     constructor(private http: Http) { }
 
     getBars(): Promise<Bar[]> {
-        //return this.http.get(this.barsUrl)
-        //    .toPromise()
-        //    .then(response => response.json().data as Bar[])
-        //    .catch(this.handleError);
+        
+        return this.http.get(this.barsUrl)
+            .toPromise()
+            //.then(response => response.json().data as Bar[])
+            .then(response => {
+                console.log("HERE");
+                console.log(response);
 
-        return Promise.resolve(BarService.bars);
+                var bars = response.json() as Bar[];
+
+                return bars;
+            })
+            .catch(this.handleError);
+        
+
+        //return Promise.resolve(BarService.bars);
     }
 
-    getBar(id: number): Promise<Bar> {
+    getBar(barId: number): Promise<Bar> {
         return this.getBars()
-            .then(bars => bars.find(bar => bar.id === id));
+            .then(bars => bars.find(bar => bar.barId === barId));
     }
 
     getBarByName(name: string): Promise<Bar> {
@@ -80,21 +91,24 @@ export class BarService {
     //}
 
     //createBar(bar: Bar): Promise<Bar> {
-    //    return this.http
-    //        .post(this.barsUrl, JSON.stringify(bar), {headers: this.headers})
-    //        .toPromise()
-    //        //.then(res => res.json().data)
-    //        .then(function(res)
-    //        {
-    //            //debugger;
-    //            console.log(res);
-    //            return res.json().data;
-    //        })
-    //        .catch(this.handleError);
-    //}
+    createBar(name: string): Promise<Bar> {
+        var data = "{\"name\": \"" + name +  "\"}";
+
+        return this.http
+            .post(this.barsUrl, data, {headers: this.headers})
+            .toPromise()
+            //.then(res => res.json().data)
+            .then(function(res)
+            {
+                debugger;
+                console.log(res);
+                return res.json().data;
+            })
+            .catch(this.handleError);
+    }
     //
     //
-    //delete(id: number): Promise<void> {
+    //delete(barId: number): Promise<void> {
     //    let url = `${this.barsUrl}/${id}`;
     //    return this.http.delete(url, {headers: this.headers})
     //        .toPromise()

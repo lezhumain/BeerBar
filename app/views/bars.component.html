@@ -29,7 +29,7 @@
     <tr *ngFor="let bar of filteredBars" [class.selected]="bar === selectedBar" (click)="onSelect(bar)">
         <td>{{bar.name}}</td>
         <td>{{bar.city}}</td>
-        <td>{{bar.beers.length}}</td>
+        <td>{{bar.listBeer.length}}</td>
     </tr>
     <tr>
         <td></td>

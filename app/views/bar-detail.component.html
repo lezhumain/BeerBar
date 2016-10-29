@@ -31,7 +31,7 @@
         <div class="barBeers">
             <h4>Bières du bar</h4>
 
-            <div *ngIf="bar.beers.length !== 0">
+            <div *ngIf="bar.listBeer.length !== 0">
                 <table class="table table-striped table-hover" >
                     <tr>
                         <th>Nom</th>
@@ -39,7 +39,7 @@
                         <th>Degré</th>
                     </tr>
                     <!--<tr >-->
-                    <tr *ngFor="let beer of bar.beers">
+                    <tr *ngFor="let beer of bar.listBeer">
                         <td>{{beer.name}}</td>
                         <td>Blonde</td>
                         <td>{{beer.degree}}</td>
@@ -56,7 +56,7 @@
                     </tr>
                 </table>
             </div>
-            <div *ngIf="bar.beers.length === 0">
+            <div *ngIf="bar.listBeer.length === 0">
                 <span>Aucune bière dans ce bar...</span>
                 <a (click)="gotoCreateBeer()">
                     <span class="glyphicon glyphicon-plus add" ></span>

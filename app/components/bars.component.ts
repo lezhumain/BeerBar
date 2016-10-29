@@ -71,7 +71,7 @@ export class BarsComponent implements OnInit
         this.selectedBar = bar;
         console.log("clicked: " + typeof(window.location));
 
-        this.router.navigate(['/detail', bar.id]);
+        this.router.navigate(['/detail', bar.barId]);
     };
 
     ngOnInit(): void {
@@ -104,9 +104,9 @@ export class BarsComponent implements OnInit
         var self = this;
         this.bars.forEach(function(item, index)
         {
-            let id = item.id;
+            let id = item.barId;
             let hasThaBeer = false;
-            item.beers.forEach(function(subitem, subindex)
+            item.listBeer.forEach(function(subitem, subindex)
             {
                 //debugger;
 
@@ -121,10 +121,11 @@ export class BarsComponent implements OnInit
             }
         });
 
+        debugger;
         let length = this.filteredBars.length;
         for(let i = 0; i < length; ++i)
         {
-            if(this.toRemove.indexOf(this.filteredBars[i].id) > -1)
+            if(this.toRemove.indexOf(this.filteredBars[i].barId) > -1)
             {
                 this.filteredBars.splice(i, 1);
                 --i;
