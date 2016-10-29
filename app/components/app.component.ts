@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
 import {MyCustomMapsComponent} from "./my-custom-maps.component";
 import {LoggedInRouterOutlet} from "../logged-in-router-outlet";
 import {UserService} from "../services/user.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'my-app',
@@ -26,6 +27,9 @@ import {UserService} from "../services/user.service";
         </header>
         <div class="content">
             <router-outlet (activate)='onRouteChange($event)' ></router-outlet>
+            <!--<router-outlet></router-outlet>-->
+            
+            
             <!--<loggedin-router-outlet></loggedin-router-outlet>-->
             <!--<router-outlet [geoloc]="{{location}}"></router-outlet>-->
         </div>
@@ -37,20 +41,25 @@ export class AppComponent {
     title: string = 'Tour of Bars';
     loggedIn: boolean = false;
 
-    constructor(private userService: UserService){}
+    constructor(
+        private router: Router,
+        private userService: UserService){}
 
     onRouteChange(event: any)
     {
-        let canAccess: boolean = event.router.url == "/login" ||
-                        this.userService.isLoggedIn();
+        let loginRoute: boolean = event.router.url == "/login",
+            loggedIn: boolean = this.userService.isLoggedIn() || ( window["loggedIn"] !== undefined && window["loggedIn"] === true),
+            canAccess: boolean = loginRoute || loggedIn;
 
+        // debugger;
         if(!canAccess)
         {
-            debugger;
-            //event.router.navigate(["/login"]);
+            // debugger;
+            event.router.navigate(["/login"]);
         }
-        else if(this.userService.isLoggedIn())
+        else if(this.userService.isLoggedIn()) {
+            window["loggedIn"] = true;
             this.loggedIn = true;
-
+        }
     }
 }

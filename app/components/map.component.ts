@@ -109,11 +109,13 @@ export class MapComponent {
             lng = position.longitude;
             accuracy = position.accuracy;
         }
-        else {
-            lat = (this.geoloc.latitude * (callsCount - 1) + position.latitude) / callsCount;
-            lng = (this.geoloc.longitude * (callsCount - 1) + position.longitude) / callsCount;
-            accuracy = (this.geoloc.accuracy * (callsCount - 1) + position.accuracy) / callsCount;
-        }
+        else
+            if(this.geoloc !== undefined)
+            {
+                lat = (this.geoloc.latitude * (callsCount - 1) + position.latitude) / callsCount;
+                lng = (this.geoloc.longitude * (callsCount - 1) + position.longitude) / callsCount;
+                accuracy = (this.geoloc.accuracy * (callsCount - 1) + position.accuracy) / callsCount;
+            }
 
         this.geoloc = {
             accuracy: accuracy,
@@ -150,8 +152,6 @@ export class MapComponent {
                 MapComponent.onErrorLocation(val);
             });
         }
-
-        return null;
     };
 
     //private initMap(): void
@@ -166,29 +166,9 @@ export class MapComponent {
             this.placesHack();
     }
 
-    //test method
-    //private getMarkers(): void {
-    //    this.service.getAllArray()
-    //        .then(markers => {
-    //            this.markers = markers;
-    //            debugger;
-    //        });
-    //}
-
-    //test method
-    //private getMarkers(): void {
-    //    debugger;
-    //    this.service.getAll()
-    //        //.then(response => {
-    //        //    //this.markers = markers;*
-    //        //    console.log(response);
-    //        //    debugger;
-    //        //});
-    //    .subscribe(resp => {
-    //       console.log(resp);
-    //        debugger;
-    //    });
-    //}
+    navigate(url: string): void{
+        this.router.navigate([url]);
+    };
 
     private placesHack(radius?: number): void
     {
@@ -210,21 +190,36 @@ export class MapComponent {
                 return;
 
 
-            var body = document.getElementsByTagName("mymap")[0];
-            var firstChild = body.childNodes[0];
+            var mapBody = document.getElementsByTagName("mymap")[0];
+
+            if(mapBody === undefined)
+            {
+                self.navigate("/map");
+                return false;
+            }
+
+            var firstChild = mapBody.childNodes[0];
             var newMap = document.createElement("div");
 
             newMap.setAttribute("id", "map1");
             newMap.setAttribute("style", "display: none;");
 
-            body.insertBefore(newMap, firstChild);
+            mapBody.insertBefore(newMap, firstChild);
+            return true;
         };
 
         var initMap = function()
         {
-            preInitMap();
+            if(!preInitMap())
+                return false;
 
             //var pyrmont = {lat: -33.867, lng: 151.195};
+            if(self.geoloc === undefined)
+            {
+                self.getLocation();
+                return;
+            }
+
             var currentLoc = {lat: self.geoloc.latitude, lng: self.geoloc.longitude};
             // var radius = 250;
             var types = ["bar"];
@@ -245,7 +240,11 @@ export class MapComponent {
             // console.log(params);
 
             let service = new gooogle.maps.places.PlacesService(self.map);
+            console.log("nearby params");
+            console.log(params);
             service.nearbySearch(params, callback);
+
+            return true;
         };
 
         var createMarker = function(data)
@@ -278,6 +277,13 @@ export class MapComponent {
             }
         };
 
-        initMap();
+        // TODO check this
+        // let done: boolean = false;
+        // let cpt: number = 0,
+        //     max: number  = 10;
+        // while(!done && cpt < max) {
+        //     done = initMap();
+        //     cpt++;
+        // }
     }
 }

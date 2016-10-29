@@ -29,7 +29,7 @@
         <label class="control-label" for="fRadius">Rayon de recherche:</label>
         <input id="fRadius" #radius type="number" class="form-control" placeholder="" [value]="searchRadius">
     </div>
-    <button type="submit" class="btn btn-primary" (click)="placesHack(radius.value)">Submit</button>
+    <button type="button" class="btn btn-primary" (click)="placesHack(radius.value)">Submit</button>
     <button class="btn btn-default" (click)="centerMap()" data-toggle="tooltip" data-placement="top" title="Re-centrer la carte">
         <img src="../../curPositionIcon.png" title="Re-centrer la carte"/>
     </button>
