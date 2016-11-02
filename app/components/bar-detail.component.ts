@@ -11,8 +11,10 @@ import {Bar} from "../model/bar";
     styleUrls: ['app/styles/bar-detail.component.css']
 })
 export class BarDetailComponent implements OnInit {
+    // TODO check if input needed
     @Input()
     bar: Bar;
+    isModif: boolean = false;
 
     constructor(
         private barService: BarService,
@@ -49,6 +51,22 @@ export class BarDetailComponent implements OnInit {
     navigate(url: string): void{
         this.router.navigate([url]);
     };
+
+    modMode(toEnable: boolean): void
+    {
+        this.isModif = toEnable;
+    }
+
+    modify(): void
+    {
+        console.log(this.bar);
+
+        this.barService.updateBar(this.bar)
+            .then(value => {
+                console.log(value);
+                debugger;
+            })
+    }
 
     gotoCreateBeer(): void
     {

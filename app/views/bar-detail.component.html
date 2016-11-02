@@ -1,7 +1,12 @@
 <div class="header">
 
-    <!-- back on right button -->
     <button id="back" type="button" class="btn btn-primary" (click)="navigate('/bars')">Back</button>
+    <!-- IF !isModif -->
+    <button *ngIf="!isModif" id="modify" type="button" class="btn btn-danger" (click)="modMode(true)">Modify</button>
+
+    <!-- IF !isModif -->
+    <button *ngIf="isModif" id="modify" type="button" class="btn btn-success" (click)="modify()">Validate</button>
+    <button *ngIf="isModif" id="cancelModif" type="button" class="btn btn-danger" (click)="modMode(false)">Cancel</button>
 
     <h2>Bar Details</h2>
 </div>
@@ -9,15 +14,19 @@
     <div class="mainContent">
         <div class="barInfoLine">
             <span class="barInfoLabel">Nom:</span>
-            <span class="value">{{bar.name}}</span>
+            <span *ngIf="!isModif" class="value">{{bar.name}}</span>
+            <!-- <input *ngIf="isModif" class="value" type="text" value="{{bar.name}}"> -->
+            <input *ngIf="isModif" class="value" type="text" [(ngModel)]="bar.name">
         </div>
         <div class="barInfoLine">
             <span class="barInfoLabel">Adresse:</span>
-            <span class="value">{{bar.address}}</span>
+            <span *ngIf="!isModif" class="value">{{bar.address}}</span>
+            <input *ngIf="isModif" class="value" type="text" [(ngModel)]="bar.address">
         </div>
         <div class="barInfoLine">
             <span class="barInfoLabel">Ville:</span>
-            <span class="value">{{bar.city}}</span>
+            <span *ngIf="!isModif" class="value">{{bar.city}}</span>
+            <input *ngIf="isModif" class="value" type="text" [(ngModel)]="bar.city">
         </div>
         <!--<div class="barInfoLine">-->
             <!--<span class="barInfoLabel">Code Postal:</span>-->
@@ -25,10 +34,11 @@
         <!--</div>-->
         <div class="barInfoLine">
             <span class="barInfoLabel">Description:</span>
-            <span class="value">{{bar.description}}</span>
+            <span *ngIf="!isModif" class="value">{{bar.description}}</span>
+            <input *ngIf="isModif" class="value" type="text" [(ngModel)]="bar.description">            
         </div>
 
-        <div class="barBeers">
+        <div *ngIf="!isModif" class="barBeers">
             <h4>Bières du bar</h4>
 
             <div *ngIf="bar.listBeer.length !== 0">

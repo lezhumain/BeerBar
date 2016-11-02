@@ -27,8 +27,8 @@ import {Router} from "@angular/router";
 export class MapComponent {
     title: string = 'Bars autour de moi';
 
-    lat: number = 51.678418;
-    lng: number = 7.809007;
+    lat: number = 0;
+    lng: number = 0;
     zoom: number = 16;
     geoloc: Coordinates;
     mapService: GoomapService;
@@ -45,8 +45,6 @@ export class MapComponent {
                 private service: GoomapService,
                 private router: Router)
     {
-        this.getLocation();
-
         this.mapService = service;
         this.markers = [];
 
@@ -55,15 +53,19 @@ export class MapComponent {
         ulMenu.children[0].className="";
         ulMenu.children[1].className="active";
 
+        /*
         let self = this;
         this._wrapper.getNativeMap().then((m) => {
             self.map = m;
             //console.log(m);
         });
+        */
 
     };
 
     ngOnInit(): void {
+        //debugger;
+        this.getLocation();
 
         var self = this;
         setInterval(() => {
@@ -90,15 +92,18 @@ export class MapComponent {
         self.adjustGeoloc(position.coords);
         self.centerMap();
 
-        self.placesHack();
+        //self.placesHack();
 
+        /*
         setInterval(() => {
             self.checkMarkers();
             console.log("Just checked markers");
         }, 10000);
+        */
     }
 
-    private adjustGeoloc(position: Coordinates): void{
+    private adjustGeoloc(position: Coordinates): void
+    {
         let callsCount = MapComponent.locationCallsCount;
         let lat: number;
         let lng: number;
@@ -124,14 +129,28 @@ export class MapComponent {
             heading: position.heading,
             latitude: lat,
             longitude: lng,
-            speed: position.speed,
+            speed: position.speed
         };
+    }
+
+    private geolocOk(): boolean
+    {
+        return this.geoloc != undefined
+            && this.geoloc.latitude != undefined
+            && this.geoloc.longitude != undefined
     }
 
     private centerMap(): void{
         //debugger;
-        this.lat = this.geoloc.latitude;
-        this.lng = this.geoloc.longitude;
+
+        if( this.geolocOk() )
+        {
+            this.lat = this.geoloc.latitude;
+            this.lng = this.geoloc.longitude;
+            console.log("center map: lat=" + this.lat + " lng=" + this.lng);
+        }
+        else
+            this.getLocation();
     }
 
     private static onErrorLocation(val: any): void
@@ -154,16 +173,15 @@ export class MapComponent {
         }
     };
 
-    //private initMap(): void
-    //{
-    //    //TODO get map from component
-    //};
-
 
     private checkMarkers(): void
     {
+        // TODO check this
+        /*
         if(this.markers.length === 0)
             this.placesHack();
+        */
+        this.placesHack();
     }
 
     navigate(url: string): void{
@@ -194,7 +212,8 @@ export class MapComponent {
 
             if(mapBody === undefined)
             {
-                self.navigate("/map");
+                //debugger;
+                //self.navigate("/map");
                 return false;
             }
 
@@ -220,7 +239,9 @@ export class MapComponent {
                 return;
             }
 
-            var currentLoc = {lat: self.geoloc.latitude, lng: self.geoloc.longitude};
+            var lat = self.geoloc != undefined && self.geoloc.latitude != undefined ? self.geoloc.latitude : 0, 
+                lng = self.geoloc != undefined && self.geoloc.longitude != undefined ? self.geoloc.longitude : 0;
+            var currentLoc = {lat: lat, lng: lng};
             // var radius = 250;
             var types = ["bar"];
 
@@ -285,5 +306,6 @@ export class MapComponent {
         //     done = initMap();
         //     cpt++;
         // }
+        initMap();
     }
 }

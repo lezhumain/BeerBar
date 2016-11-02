@@ -55,7 +55,7 @@ export class AppComponent {
         if(!canAccess)
         {
             // debugger;
-            event.router.navigate(["/login"]);
+            //event.router.navigate(["/login"]);
         }
         else if(this.userService.isLoggedIn()) {
             window["loggedIn"] = true;

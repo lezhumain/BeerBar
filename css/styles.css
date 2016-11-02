@@ -24,10 +24,10 @@ body {
 	margin: 20px;
 }
 
-#back
+#back, #modify, #cancelModif
 {
 	float: right;
-	width: 70px;
+	width: auto;
 	margin-right: 10px;
 }
 

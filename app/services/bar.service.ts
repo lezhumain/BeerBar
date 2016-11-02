@@ -106,6 +106,24 @@ export class BarService {
             })
             .catch(this.handleError);
     }
+
+    // TODO: see OPTIONS and CORS
+    updateBar(bar: Bar): Promise<Bar> {
+        let body = JSON.stringify(bar);
+        debugger;
+
+        return this.http
+            .put(this.barsUrl, body, {headers: this.headers})
+            .toPromise()
+            //.then(res => res.json().data)
+            .then(function(res)
+            {
+                debugger;
+                console.log(res);
+                return res.json().data;
+            })
+            .catch(this.handleError);
+    }
     //
     //
     //delete(barId: number): Promise<void> {
