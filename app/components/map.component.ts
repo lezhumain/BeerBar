@@ -53,6 +53,7 @@ export class MapComponent {
     {
         this.runsHttps = window.location.protocol.indexOf("https") !== -1;
         this.runsLocalhost = window.location.hostname === "localhost";
+        //this.runsLocalhost = false;
 
         //debugger;
         this.mapService = service;
@@ -108,7 +109,7 @@ export class MapComponent {
         self.adjustGeoloc(position.coords);
         self.centerMap();
 
-        //self.placesHack();
+        self.placesHack();
 
         /*
         setInterval(() => {

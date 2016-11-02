@@ -1,7 +1,7 @@
 
-<div id="position">
-    <span id="lat">{{lat}}</span>
-    ,<span id="lng">{{lng}}</span>
+<div *ngIf="runsHttps || runsLocalhost" id="position">
+    <span id="lat">{{lat | number:'.1-2'}}</span>
+    ,<span id="lng">{{lng | number:'.1-2'}}</span>
 </div>
 <h1>{{ title }}</h1>
 
@@ -9,6 +9,7 @@
 
 <!-- this creates a google map on the page with the given lat/lng from -->
 <!-- the component as the initial center of the map: -->
+<!--only if we run https or localhost-->
 <sebm-google-map *ngIf="runsHttps || runsLocalhost" [latitude]="lat" [longitude]="lng" [zoom]="15">
 <!--<sebm-google-map *ngIf="!runsLocalhost" [latitude]="lat" [longitude]="lng" [zoom]="15">-->
     <!--<my-custom-maps-component [latitude]="lat" [longitude]="lng" [zoom]="15"></my-custom-maps-component>-->
@@ -28,8 +29,7 @@
 
 </sebm-google-map>
 
-
-<form class="form-horizontal form-inline">
+<form *ngIf="runsHttps || runsLocalhost" class="form-horizontal form-inline">
     <div class="form-group">
         <label class="control-label" for="fRadius">Rayon de recherche:</label>
         <input id="fRadius" #radius type="number" class="form-control" placeholder="" [value]="searchRadius">
@@ -45,3 +45,16 @@
         <!--<img src="../../curPositionIcon.png"/>-->
     <!--</button>-->
 </form>
+
+
+<!--if we dont run-->
+<div *ngIf="!(runsHttps || runsLocalhost)" >
+    <div class="alert alert-warning">
+        <h4>
+            <i aria-hidden="true" class="fa fa-warning"></i>
+            Warning!
+        </h4>
+        Cette partie n'est pas accessible car l'application n'est pas sécurisée par le protocol HTTPS. <br>
+        Pour y accéder, lancer l'application sur localhost.
+    </div>
+</div>
