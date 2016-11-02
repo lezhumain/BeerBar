@@ -1,11 +1,16 @@
 
+<div id="position">
+    <span id="lat">{{lat}}</span>
+    ,<span id="lng">{{lng}}</span>
+</div>
 <h1>{{ title }}</h1>
 
 <!--plunker for help: http://plnkr.co/edit/YX7W20?p=preview-->
 
 <!-- this creates a google map on the page with the given lat/lng from -->
 <!-- the component as the initial center of the map: -->
-<sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="15">
+<sebm-google-map *ngIf="runsHttps || runsLocalhost" [latitude]="lat" [longitude]="lng" [zoom]="15">
+<!--<sebm-google-map *ngIf="!runsLocalhost" [latitude]="lat" [longitude]="lng" [zoom]="15">-->
     <!--<my-custom-maps-component [latitude]="lat" [longitude]="lng" [zoom]="15"></my-custom-maps-component>-->
     <!--<my-custom-maps-component></my-custom-maps-component>-->
     <custom-map test="lol"></custom-map>
@@ -28,11 +33,12 @@
     <div class="form-group">
         <label class="control-label" for="fRadius">Rayon de recherche:</label>
         <input id="fRadius" #radius type="number" class="form-control" placeholder="" [value]="searchRadius">
+
+        <button type="button" class="btn btn-primary" (click)="placesHack(radius.value)">Submit</button>
+        <button disabled="disabled" class="btn btn-default" type="button"  (click)="centerMap()" data-toggle="tooltip" data-placement="top" title="Re-centrer la carte">
+            <img src="../../curPositionIcon.png" title="Re-centrer la carte"/>
+        </button>
     </div>
-    <button type="button" class="btn btn-primary" (click)="placesHack(radius.value)">Submit</button>
-    <button class="btn btn-default" (click)="centerMap()" data-toggle="tooltip" data-placement="top" title="Re-centrer la carte">
-        <img src="../../curPositionIcon.png" title="Re-centrer la carte"/>
-    </button>
 
     <!--<button class="btn btn-default tooltip" (click)="centerMap()">-->
         <!--<span class="tooltiptext">Tooltip text</span>-->

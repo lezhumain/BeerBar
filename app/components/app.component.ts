@@ -41,9 +41,12 @@ export class AppComponent {
     title: string = 'Tour of Bars';
     loggedIn: boolean = false;
 
+
     constructor(
         private router: Router,
-        private userService: UserService){}
+        private userService: UserService)
+    {
+    }
 
     onRouteChange(event: any)
     {

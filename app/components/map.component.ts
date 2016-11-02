@@ -8,6 +8,7 @@ import {IMarker} from "../model/imarker";
 import {CustomMapComponent} from "./custom-map.component";
 import {UserService} from "../services/user.service";
 import {Router} from "@angular/router";
+import Timer = NodeJS.Timer;
 
 //import {MyCustomMapsComponent} from "./my-custom-maps.component";
 //import {CustomMapComponent} from "./custom-map.component";
@@ -39,12 +40,21 @@ export class MapComponent {
     //info: string = "";
     searchRadius: number = 300;
 
+    runsHttps: boolean = false;
+    runsLocalhost: boolean = false;
+
+    static geolocIntervalId: Timer = null;
+
     static locationCallsCount: number = 0;
 
     constructor(private _wrapper: GoogleMapsAPIWrapper,
                 private service: GoomapService,
                 private router: Router)
     {
+        this.runsHttps = window.location.protocol.indexOf("https") !== -1;
+        this.runsLocalhost = window.location.hostname === "localhost";
+
+        //debugger;
         this.mapService = service;
         this.markers = [];
 
@@ -68,7 +78,13 @@ export class MapComponent {
         this.getLocation();
 
         var self = this;
-        setInterval(() => {
+
+        if(MapComponent.geolocIntervalId != null) {
+            clearInterval(MapComponent.geolocIntervalId);
+            MapComponent.locationCallsCount = 0;
+        }
+
+        MapComponent.geolocIntervalId = setInterval(() => {
             self.getLocation();
             console.log("Just updated geolocation");
         }, 22000);
@@ -104,7 +120,10 @@ export class MapComponent {
 
     private adjustGeoloc(position: Coordinates): void
     {
+        //TODO check adjustion
+
         let callsCount = MapComponent.locationCallsCount;
+        //let callsCount = 1;
         let lat: number;
         let lng: number;
         let accuracy: number;
@@ -138,6 +157,8 @@ export class MapComponent {
         return this.geoloc != undefined
             && this.geoloc.latitude != undefined
             && this.geoloc.longitude != undefined
+            && this.geoloc.latitude != NaN
+            && this.geoloc.longitude != NaN;
     }
 
     private centerMap(): void{
