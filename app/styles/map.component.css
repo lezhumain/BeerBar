@@ -35,3 +35,15 @@ button>img
 {
     display: inline-block;
 }
+
+.btn-addToApp
+{
+    display: block;
+    font-size: 13px;
+    padding: 5px 8px;
+}
+
+.btn-addToApp .glyphicon-plus-sign
+{
+    color: green;
+}

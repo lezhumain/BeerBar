@@ -37,7 +37,7 @@ export class BarsComponent implements OnInit
         var self = this;
         this.barService.getBars()
             //.then(bars => this.bars = bars);
-            .then(function(bars)
+            .then( bars =>
             {
                 self.bars = bars;
 
@@ -64,6 +64,11 @@ export class BarsComponent implements OnInit
                 }
                 else
                     self.search(self.filterValue);
+            })
+            .catch(param =>
+            {
+                console.log("An error occured.");
+                console.log(param);
             });
     };
 
