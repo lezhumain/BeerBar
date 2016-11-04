@@ -43,6 +43,12 @@ export class LoginComponent implements OnInit {
         this.router.navigate([url]);
     };
 
+    private onLoginError(): void
+    {
+        console.log("wrong user");
+        this.showLoginError = true;
+    }
+
     save(name: string, pass: string): void {
 
         if (!name || !pass)
@@ -53,19 +59,22 @@ export class LoginComponent implements OnInit {
         let self = this;
         console.log("method commented out\n\tlogin: " + name + "\n\tpass: " + pass);
         this.userService.login(name, pass)
-            .then(connected => {
-                if(connected === true)
+            .then(user => {
+                debugger;
+                if(user.token.length > 0)
                 {
                     console.log("ok");
                     self.navigate("/bars");
                 }
                 else
                 {
-                    console.log("wrong user");
-                    self.showLoginError = true;
+                    self.onLoginError();
                 }
-                //debugger;
-        });
+            })
+            .catch(param =>
+            {
+                self.onLoginError();   
+            });
     }
 
 }

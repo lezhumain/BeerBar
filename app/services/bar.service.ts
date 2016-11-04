@@ -11,7 +11,8 @@ import {Beer} from "../model/beer";
 
 @Injectable()
 export class BarService {
-    private barsUrl = 'https://localhost:8443/bars';  // URL to web api
+    //private barsUrl = 'https://localhost:8443/bars';  // URL to web api
+    private barsUrl = 'http://192.168.1.108:8080/bars';  // URL to web api
     //private barsUrl = 'http://davanture.fr:8080/bars';  // URL to web api
     private headers = new Headers({'Content-Type': 'application/json'});
 
@@ -51,35 +52,12 @@ export class BarService {
         return Promise.reject(error.message || error);
     }
 
-    //update(bar: Bar): Promise<Bar> {
-    //    const url = `${this.barsUrl}/${bar.id}`;
-    //    return this.http
-    //        .put(url, JSON.stringify(bar), {headers: this.headers})
-    //        .toPromise()
-    //        .then(() => bar)
-    //        .catch(this.handleError);
-    //}
-
-    //create(name: string): Promise<Bar> {
-    //    return this.http
-    //        .post(this.barsUrl, JSON.stringify({name: name}), {headers: this.headers})
-    //        .toPromise()
-    //        //.then(res => res.json().data)
-    //        .then(function(res)
-    //        {
-    //            let bar = new Bar();
-    //            bar.name = res.json().data.name;
-    //            bar.id = res.json().data.id;
-    //            //debugger;
-    //            //return res.json().data;
-    //            return bar;
-    //        })
-    //        .catch(this.handleError);
-    //}
-
     //createBar(bar: Bar): Promise<Bar> {
     createBar(name: string): Promise<Bar> {
-        var data = "{\"name\": \"" + name +  "\"}";
+        // TODO pass bar as param
+        //var data = "{\"name\": \"" + name +  "\"}";
+        debugger;
+        var data = name;
 
         return this.http
             .post(this.barsUrl, data, {headers: this.headers})
@@ -87,9 +65,8 @@ export class BarService {
             //.then(res => res.json().data)
             .then(function(res)
             {
-                debugger;
-                console.log(res);
-                return res.json().data;
+                //console.log(res);
+                return res.json();
             })
             .catch(this.handleError);
     }
@@ -97,7 +74,6 @@ export class BarService {
     // TODO: see OPTIONS and CORS
     updateBar(bar: Bar): Promise<Bar> {
         let body = JSON.stringify(bar);
-        debugger;
 
         return this.http
             .put(this.barsUrl, body, {headers: this.headers})
@@ -105,9 +81,8 @@ export class BarService {
             //.then(res => res.json().data)
             .then(function(res)
             {
-                debugger;
                 console.log(res);
-                return res.json().data;
+                return res.json();
             })
             .catch(this.handleError);
     }

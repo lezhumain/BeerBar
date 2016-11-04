@@ -34,14 +34,7 @@ export class BarDetailComponent implements OnInit {
             //var self = this;
             this.barService.getBar(id)
                 .then(bar => this.bar = bar);
-                //.then(function(bar)
-                //{
-                //    self.bar = bar;
-                //    //console.log(self.bar.listBeer.length);
-                //});
         });
-
-        //console.log(this.bar.listBeer);
     };
 
     static goBack(): void {
@@ -60,12 +53,25 @@ export class BarDetailComponent implements OnInit {
     modify(): void
     {
         console.log(this.bar);
+        var self = this;
 
         this.barService.updateBar(this.bar)
+            /*
             .then(value => {
                 console.log(value);
                 debugger;
+            });
+            */
+            .then(function(value){
+                console.log(value);
+                self.bar = value;
+                debugger;
             })
+            .catch(function(value){
+                console.log("ERROR");
+                console.log("ERROR");
+                console.log("ERROR");
+            });
     }
 
     gotoCreateBeer(): void

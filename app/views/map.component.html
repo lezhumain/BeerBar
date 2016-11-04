@@ -40,7 +40,7 @@
 <form *ngIf="runsHttps || runsLocalhost" class="form-horizontal form-inline">
     <div class="form-group">
         <label class="control-label" for="fRadius">Rayon de recherche:</label>
-        <input id="fRadius" #radius type="number" class="form-control" placeholder="" [value]="searchRadius">
+        <input id="fRadius" #radius type="number" class="form-control" placeholder="">
 
         <button type="button" class="btn btn-primary" (click)="placesHack(radius.value)">Submit</button>
         <button disabled="disabled" class="btn btn-default" type="button"  (click)="centerMap()" data-toggle="tooltip" data-placement="top" title="Re-centrer la carte">

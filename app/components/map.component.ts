@@ -32,7 +32,7 @@ export class MapComponent {
 	lng: number = 0;
 	zoom: number = 16;
 	geoloc: Coordinates;
-	mapService: GoomapService;
+	//mapService: GoomapService;
 	map: mapTypes.GoogleMap;
 	markers: IMarker[];
 	//positionIconUrl: string = "http://www.googlemapsmarkers.com/v1/P/0099FF/";
@@ -56,7 +56,7 @@ export class MapComponent {
 		//this.runsLocalhost = false;
 
 		//debugger;
-		this.mapService = service;
+		//this.mapService = service;
 		this.markers = [];
 
 		// set active class for menu

@@ -7,7 +7,7 @@ import {User} from "../model/user";
  */
 @Injectable()
 export class UserService {
-    private userUrl = 'app/login';  // URL to web api
+    private userUrl = 'http://192.168.1.108:8080/login';  // URL to web api
     private headers = new Headers({'Content-Type': 'application/json'});
     private static loggedIn = false;
 
@@ -32,18 +32,33 @@ export class UserService {
         //    .catch(this.handleError);
 
         var ok = false;
-        UserService.users.forEach(function(elem, index)
-        {
-            // console.log(elem);
-            if(elem.name === name && elem.password === pass)
-            {
-                ok = true;
-                return;
-            }
-        });
+        var data = "{\"username\":\"" + name + "\",\"password\":\"" + pass + "\"}";
+        debugger;
+        //UserService.users.forEach(function(elem, index)
+        //{
+        //    // console.log(elem);
+        //    if(elem.name === name && elem.password === pass)
+        //    {
+        //        ok = true;
+        //        return;
+        //    }
+        //});
 
-        UserService.loggedIn = ok;
-        return Promise.resolve(UserService.loggedIn);
+        return this.http
+            .post(this.userUrl, data, {headers: this.headers})
+            .toPromise()
+            .then( res =>
+            {
+                console.log(res);
+
+                UserService.loggedIn = ok;
+
+                return res.json();
+            })
+            .catch(this.handleError);
+
+
+        //return Promise.resolve(UserService.loggedIn);
     }
 
     isLoggedIn(): boolean

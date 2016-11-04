@@ -13,12 +13,14 @@ import {Bar} from "../model/bar";
 export class BarAddComponent implements OnInit {
     @Input()
     bar: Bar;
+    nameValue: string = "";
+    showError: boolean = false;
 
     constructor(
         private barService: BarService,
         private route: ActivatedRoute,
         private router: Router) {
-        this.bar = new Bar();
+        new Bar();
 
         // set active class for menu
         let ulMenu = document.getElementsByTagName("ul")[0];
@@ -43,22 +45,42 @@ export class BarAddComponent implements OnInit {
     }
 
     save(name: string): void {
-        this.bar.name = name;
+        var self = this;
+
+        name = name.trim();
+        //this.bar.name = name;
+        //this.nameValue = name;
         //var data = "{\"name\": \"" + name +  "\"}";
 
         if (!name)
             return;
 
-        console.log("method commented out");
+        //console.log("method commented out");
         console.log(name);
-        //this.barService.createBar(name)
-        //    .then(bar => {
-        //        console.log("bar-add.component.ts");
-        //        console.log(bar);
-        //        //debugger;
-        //        this.bars.push(bar);
-        //        this.selectedBar = null;
-        //        //this.navigate("/bars");
-        //    });
+        this.barService.createBar(name)
+            .then(bar => {
+                console.log("bar-add.component.ts");
+                console.log(bar);
+                //debugger;
+                //this.bars.push(bar);
+                //this.selectedBar = null;
+                //this.navigate("/bars");
+                self.showError = false;
+                this.navigate("/bars");
+            })
+            .catch(param =>
+            {
+                self.onCreateError(param);
+            });
+    }
+
+    private onCreateError(param: any)
+    {
+        debugger;
+        console.log("error");
+        console.log(param);
+
+        this.showError = true;
+
     }
 }
