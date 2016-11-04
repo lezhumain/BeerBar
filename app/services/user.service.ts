@@ -12,10 +12,9 @@ export class UserService {
     private static loggedIn = false;
 
     private static users: User[] = [
-        {id: 1, name: 'lez', password: "123lol"},
-        {id: 2, name: 'hum', password: "123lol"},
-        {id: 3, name: 'ain', password: "123lol"},
-
+        {id: 1, username: 'lez', password: "123lol", token: "okok"},
+        {id: 2, username: 'hum', password: "123lol", token: "okok"},
+        {id: 3, username: 'ain', password: "123lol", token: "okok"}
     ];
 
     constructor(private http: Http) {
@@ -24,7 +23,7 @@ export class UserService {
     }
 
     // TODO: post
-    login(name: string, pass: string): Promise<boolean>
+    login(name: string, pass: string): Promise<any>
     {
         //return this.http.get(this.barsUrl)
         //    .toPromise()

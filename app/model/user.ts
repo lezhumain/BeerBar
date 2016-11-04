@@ -4,13 +4,15 @@ import {Beer} from "./beer";
  */
 export class User {
     id: number;
-    name: string;
+    username: string;
     password: string;
+    token: string;
 
     constructor()
     {
         this.id = 0;
-        this.name = "";
+        this.username = "";
         this.password = "";
+        this.token = "";
     }
 }
