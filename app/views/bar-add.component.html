@@ -12,18 +12,24 @@
 
 <div class="mainContent">
 
-    <div>
+    <div *ngIf="bar">
         <form class="form-horizontal">
             <div class="form-group">
                 <label class="control-label col-sm-2" for="nom">Nom:</label>
                 <div class="col-sm-10">
-                    <input #namee id="nom"  type="text" class="form-control" placeholder="Enter nom">
+                    <!--<input #namee id="nom"  type="text" class="form-control" placeholder="Enter nom">-->
+                    <input id="nom" name="name" type="text" class="form-control" placeholder="Enter nom" [(ngModel)]="bar.name">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="ville">Ville:</label>
                 <div class="col-sm-10">
-                    <input #villee id="ville"  type="text" class="form-control" placeholder="Enter city">
+                    <!--<input #villee id="ville"  type="text" class="form-control" placeholder="Enter city">-->
+                    <input id="ville"  name="city" type="text" class="form-control" placeholder="Enter city" [(ngModel)]="bar.city">
+                    <!--<input id="ville"  name="city" type="text" class="form-control" placeholder="Enter city">-->
+                    <!--[ngModel]="bar.city"-->
+                    <!--[ngModel]="test1($event)"-->
+                    <!--(ngModelChange)="test($event)"-->
                 </div>
             </div>
             <!--<div class="form-group">-->
@@ -34,7 +40,8 @@
             <!--</div>-->
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="button" class="btn btn-default" (click)="save(namee.value, villee.value)">Submit</button>
+                    <!--<button type="button" class="btn btn-default" (click)="save(namee.value, villee.value)">Submit</button>-->
+                    <button type="button" class="btn btn-default" (click)="savePLess()">Submit</button>
                     <button type="button" class="btn btn-default" (click)="navigate('/bars')">Cancel</button>
                 </div>
             </div>

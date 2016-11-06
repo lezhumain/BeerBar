@@ -10,6 +10,7 @@ import {UserService} from "../services/user.service";
 import {Router} from "@angular/router";
 import Timer = NodeJS.Timer;
 import {Bar} from "../model/bar";
+import {GeolocService} from "../services/geoloc.service";
 
 //import {MyCustomMapsComponent} from "./my-custom-maps.component";
 //import {CustomMapComponent} from "./custom-map.component";
@@ -39,10 +40,12 @@ export class MapComponent {
 	//positionIconUrl: string = "http://www.googlemapsmarkers.com/v1/P/0099FF/";
 	positionIconUrl: string = "https://www.robotwoods.com/dev/misc/bluecircle.png";
 	//info: string = "";
-	searchRadius: number = 300;
+	searchRadius: number = 500;
 
 	runsHttps: boolean = false;
 	runsLocalhost: boolean = false;
+	addSuccess: boolean;
+    isLoading: boolean = false;
 
 	static geolocIntervalId: Timer = null;
 
@@ -50,6 +53,7 @@ export class MapComponent {
 
 	constructor(private _wrapper: GoogleMapsAPIWrapper,
 				private service: BarService,
+				private geolocService: GeolocService,
 				private router: Router)
 	{
 		this.runsHttps = window.location.protocol.indexOf("https") !== -1;
@@ -209,20 +213,28 @@ export class MapComponent {
 
 	addToApp(barName: string): void
 	{
+	    var self = this;
+
 		barName = barName.trim();
 		if (!barName) { return; }
 
 		let b = new Bar();
 		b.name = barName;
+		b.city = this.geolocService.GetCity();
 		// TODO city
 
+        this.isLoading = true;
 		this.service.createBar(b)
 			.then(bar => {
-                alert("Le bar a été ajouté.");
+                self.addSuccess = true;
+                this.isLoading = false;
+                setTimeout(function() { self.addSuccess = undefined; }, 5000);
 			})
             .catch( param =>
             {
-                alert("Une erreur est survenue.");                
+                self.addSuccess = false;
+                this.isLoading = false;
+                setTimeout(function() { self.addSuccess = undefined; }, 5000);
             });
 	}
 
@@ -243,9 +255,6 @@ export class MapComponent {
 
 		if(!gooogle || gooogle === null)
 			return;
-
-		if(radius)
-			self.searchRadius = radius;
 
 		var preInitMap = function()
 		{
@@ -285,7 +294,7 @@ export class MapComponent {
 				return;
 			}
 
-			var lat = self.geoloc != undefined && self.geoloc.latitude != undefined ? self.geoloc.latitude : 0, 
+			var lat = self.geoloc != undefined && self.geoloc.latitude != undefined ? self.geoloc.latitude : 0,
 				lng = self.geoloc != undefined && self.geoloc.longitude != undefined ? self.geoloc.longitude : 0;
 			var currentLoc = {lat: lat, lng: lng};
 			// var radius = 250;
@@ -314,15 +323,17 @@ export class MapComponent {
 			return true;
 		};
 
-		var createMarker = function(data)
+		var createMarker = function(data, self)
 		{
 			//console.log(data);
+			var isInApp = self.service.barExists(data.name);
 
 			var marker = {
 				lat : data.geometry.location.lat(),
 				lng : data.geometry.location.lng(),
 				label : data.name,
-				draggable: false
+				draggable: false,
+				inApp: isInApp
 			};
 
 			self.markers.push(marker);
@@ -337,7 +348,7 @@ export class MapComponent {
 
 				 for (var i = 0; i < results.length; i++)
 				 {
-					createMarker(results[i]);
+					createMarker(results[i], self);
 				 }
 
 				console.log("Got markers");
@@ -354,4 +365,9 @@ export class MapComponent {
 		// }
 		initMap();
 	}
+
+	// notInApp(barName: string): boolean
+	// {
+	// 	return this.service.barExists(barName);
+	// }
 }

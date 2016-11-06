@@ -8,4 +8,5 @@ export interface IMarker {
     lng: number;
     label: string;
     draggable: boolean;
+    inApp: boolean;
 }

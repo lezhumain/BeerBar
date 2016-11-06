@@ -22,6 +22,7 @@ import {CustomMapComponent} from "./components/custom-map.component";
 import {LoginComponent} from "./components/login.component";
 import {UserService} from "./services/user.service";
 import {LoggedInRouterOutlet} from "./logged-in-router-outlet";
+import {GeolocService} from "./services/geoloc.service";
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import {LoggedInRouterOutlet} from "./logged-in-router-outlet";
     ],
 	providers: [
 		BarService,
-		UserService
+		UserService,
+		GeolocService
 	],
 	bootstrap: [ AppComponent ]
 })

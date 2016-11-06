@@ -1,3 +1,7 @@
+sebm-google-map
+{
+    margin-top: 20px;
+}
 .sebm-google-map-container
 {
     height: 300px;
@@ -17,6 +21,18 @@ button>img
 {
     width: 24px;
     height: 25px;
+}
+
+#mapTitle
+{
+    display: inline-block;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.hidden
+{
+    display: none;
 }
 
 #imgPos
@@ -46,4 +62,9 @@ button>img
 .btn-addToApp .glyphicon-plus-sign
 {
     color: green;
+}
+
+.fa-spinner
+{
+    color: red;
 }

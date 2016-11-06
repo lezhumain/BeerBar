@@ -6,6 +6,8 @@ import {MyCustomMapsComponent} from "./my-custom-maps.component";
 import {LoggedInRouterOutlet} from "../logged-in-router-outlet";
 import {UserService} from "../services/user.service";
 import {Router} from "@angular/router";
+import {GeolocService} from "../services/geoloc.service";
+import {IGeoloc} from "../model/igeoloc";
 
 @Component({
     selector: 'my-app',
@@ -40,6 +42,7 @@ import {Router} from "@angular/router";
 export class AppComponent {
     title: string = 'Tour of Bars';
     loggedIn: boolean = false;
+    // private static sGeolocService: GeolocService = null;
 
 
     constructor(
@@ -47,6 +50,9 @@ export class AppComponent {
         private userService: UserService)
     {
     }
+
+    ngOnInit(): void {
+    };
 
     onRouteChange(event: any)
     {
@@ -65,4 +71,12 @@ export class AppComponent {
             this.loggedIn = true;
         }
     }
+
+    // public static GetCity(): string
+    // {
+    //     if(AppComponent.city == null)
+    //         AppComponent.city = AppComponent.retrieveCity();
+    //
+    //     return AppComponent.city;
+    // }
 }

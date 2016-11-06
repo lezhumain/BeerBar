@@ -3,7 +3,17 @@
     <span id="lat">{{lat | number:'.1-2'}}</span>
     ,<span id="lng">{{lng | number:'.1-2'}}</span>
 </div>
-<h1>{{ title }}</h1>
+
+<div>
+    <h1 id="mapTitle">{{ title }}</h1>
+    <i class="fa fa-spinner" [class.fa-spin]="isLoading" [class.hidden]="!isLoading" aria-hidden="true"></i>
+</div>
+<div *ngIf="addSuccess == false" class="alert alert-danger">
+     Une erreur est survenue.
+</div>
+<div *ngIf="addSuccess == true" class="alert alert-success">
+    Le bar a été ajouté.
+</div>
 
 <!--plunker for help: http://plnkr.co/edit/YX7W20?p=preview-->
 
@@ -24,7 +34,7 @@
         <sebm-google-map-info-window>
             <strong>{{marker.label}}</strong>
 
-            <button type="button" class="btn btn-default btn-lg btn-addToApp" (click)="addToApp(marker.label)">
+            <button *ngIf="!marker.label.inApp" type="button" class="btn btn-default btn-lg btn-addToApp" (click)="addToApp(marker.label)">
                 <!-- <i class="fa fa-plus-circle" aria-hidden="true"></i> -->
                 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                 Ajouter à l'app
@@ -40,9 +50,9 @@
 <form *ngIf="runsHttps || runsLocalhost" class="form-horizontal form-inline">
     <div class="form-group">
         <label class="control-label" for="fRadius">Rayon de recherche:</label>
-        <input id="fRadius" #radius type="number" class="form-control" placeholder="">
+        <input id="fRadius" name="searchRadius" [(ngModel)]="searchRadius" type="number" class="form-control" placeholder="">
 
-        <button type="button" class="btn btn-primary" (click)="placesHack(radius.value)">Submit</button>
+        <button type="button" class="btn btn-primary" (click)="placesHack()">Submit</button>
         <button disabled="disabled" class="btn btn-default" type="button"  (click)="centerMap()" data-toggle="tooltip" data-placement="top" title="Re-centrer la carte">
             <img src="../../curPositionIcon.png" title="Re-centrer la carte"/>
         </button>
@@ -53,8 +63,6 @@
         <!--<img src="../../curPositionIcon.png"/>-->
     <!--</button>-->
 </form>
-
-<button *ngIf="runsHttps || runsLocalhost" type="button" class="btn btn-primary" (click)="test($element)">Submit</button>
 
 <!--if we dont run-->
 <div *ngIf="!(runsHttps || runsLocalhost)" >

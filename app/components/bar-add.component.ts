@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { BarService } from '../services/bar.service';
 import {Bar} from "../model/bar";
+import {AppComponent} from "./app.component";
+import {GeolocService} from "../services/geoloc.service";
 
 @Component({
     selector: 'my-bar-add',
@@ -19,17 +21,24 @@ export class BarAddComponent implements OnInit {
     constructor(
         private barService: BarService,
         private route: ActivatedRoute,
+        private geolocService: GeolocService,
         private router: Router)
     {
-        this.bar = new Bar();
-
         // set active class for menu
         let ulMenu = document.getElementsByTagName("ul")[0];
         ulMenu.children[0].className="";
         ulMenu.children[1].className="";
+
+
+        this.bar = new Bar();
+        // this.bar.city = AppComponent.GetCity();
+        // this.bar.city = "bonjour";
     }
 
     ngOnInit(): void {
+        this.bar = new Bar();
+        this.bar.city = this.geolocService.GetCity();
+        // this.bar.city = "bonjour";
     }
 
     static goBack(): void {
@@ -43,6 +52,11 @@ export class BarAddComponent implements OnInit {
 
         // TODO check this
         this.router.navigate([url]);
+    }
+
+    savePLess(): void
+    {
+        this.save(this.bar.name, this.bar.city);
     }
 
     save(name: string, city: string): void {
@@ -84,5 +98,15 @@ export class BarAddComponent implements OnInit {
 
         this.showError = true;
 
+    }
+
+    test(event: any): void
+    {
+        debugger;
+    }
+
+    test1(e : any): void
+    {
+        debugger;
     }
 }

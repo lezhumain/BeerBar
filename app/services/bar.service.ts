@@ -8,9 +8,10 @@ import 'rxjs/add/operator/toPromise';
 
 import { Bar } from '../model/bar';
 import {Beer} from "../model/beer";
+import {BaseService} from "./base.service";
 
 @Injectable()
-export class BarService {
+export class BarService extends BaseService{
     //private barsUrl = 'https://localhost:8443/bars';  // URL to web api
     //private barsUrl = 'http://davanture.fr:8080/bars';  // URL to web api
     private wildcard: string = "%";
@@ -19,16 +20,21 @@ export class BarService {
     private barsUrl; // URL to web api
     private addBeerUrl;
 
-    private headers = new Headers({'Content-Type': 'application/json'});
+    private bars: Bar[] = null;
 
-    constructor(private http: Http) 
+    constructor(http: Http)
     {
+        super(http);
+
         this.barsUrl = this.baseUrl +"/bars";  // URL to web api
         this.addBeerUrl = this.baseUrl + "/bars/" + this.wildcard + "/beers";
+
+        this.getBars();
     }
 
     getBars(): Promise<Bar[]> {
-        
+        var self = this;
+
         return this.http.get(this.barsUrl, { withCredentials: true })
             .toPromise()
             //.then(response => response.json().data as Bar[])
@@ -36,9 +42,9 @@ export class BarService {
                 console.log("HERE");
                 console.log(response);
 
-                var bars = response.json() as Bar[];
+                self.bars = response.json() as Bar[];
 
-                return bars;
+                return self.bars;
             })
             .catch(this.handleError);
         
@@ -56,10 +62,10 @@ export class BarService {
             .then(bars => bars.find(bar => bar.name === name));
     }
 
-    private handleError(error: any): Promise<any> {
-        console.error('An error occurred', error); // for demo purposes only
-        return Promise.reject(error.message || error);
-    }
+    // private handleError(error: any): Promise<any> {
+    //     console.error('An error occurred', error); // for demo purposes only
+    //     return Promise.reject(error.message || error);
+    // }
 
     //createBar(bar: Bar): Promise<Bar> {
     createBar(bar: Bar): Promise<Bar> {
@@ -110,6 +116,22 @@ export class BarService {
                 return res.json();
             })
             .catch(this.handleError);
+    }
+
+    barExists(barName: string): boolean
+    {
+        var self = this;
+
+        if(self.bars == null)
+            return false;
+
+        self.bars.forEach(function(item, index)
+        {
+            if(item.name === barName)
+                return true;
+        });
+
+        return false;
     }
     //
     //
