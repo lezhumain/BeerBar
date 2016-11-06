@@ -67,7 +67,7 @@ export class BarService {
         var data = name;
 
         return this.http
-            .post(this.barsUrl, data, {headers: this.headers, withCredentials: true,withCredentials: true})
+            .post(this.barsUrl, data, {headers: this.headers, withCredentials: true})
             .toPromise()
             //.then(res => res.json().data)
             .then(function(res)
@@ -82,7 +82,7 @@ export class BarService {
         let body = JSON.stringify(bar);
 
         return this.http
-            .put(this.barsUrl, body, {headers: this.headers, withCredentials: true,withCredentials: true})
+            .put(this.barsUrl, body, {headers: this.headers, withCredentials: true})
             .toPromise()
             //.then(res => res.json().data)
             .then(function(res)
@@ -100,7 +100,7 @@ export class BarService {
 
         debugger;
         return this.http
-            .post(url, body, {headers: this.headers, withCredentials: true,withCredentials: true})
+            .post(url, body, {headers: this.headers, withCredentials: true})
             .toPromise()
             //.then(res => res.json().data)
             .then(function(res)

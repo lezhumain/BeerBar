@@ -54,6 +54,7 @@
     <!--</button>-->
 </form>
 
+<button *ngIf="runsHttps || runsLocalhost" type="button" class="btn btn-primary" (click)="test($element)">Submit</button>
 
 <!--if we dont run-->
 <div *ngIf="!(runsHttps || runsLocalhost)" >
