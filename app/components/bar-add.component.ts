@@ -19,8 +19,9 @@ export class BarAddComponent implements OnInit {
     constructor(
         private barService: BarService,
         private route: ActivatedRoute,
-        private router: Router) {
-        new Bar();
+        private router: Router)
+    {
+        this.bar = new Bar();
 
         // set active class for menu
         let ulMenu = document.getElementsByTagName("ul")[0];
@@ -44,10 +45,11 @@ export class BarAddComponent implements OnInit {
         this.router.navigate([url]);
     }
 
-    save(name: string): void {
+    save(name: string, city: string): void {
         var self = this;
 
-        name = name.trim();
+        self.bar.name = name.trim();
+        self.bar.city = city.trim();
         //this.bar.name = name;
         //this.nameValue = name;
         //var data = "{\"name\": \"" + name +  "\"}";
@@ -56,8 +58,8 @@ export class BarAddComponent implements OnInit {
             return;
 
         //console.log("method commented out");
-        console.log(name);
-        this.barService.createBar(name)
+        console.log(self.bar);
+        this.barService.createBar(self.bar)
             .then(bar => {
                 console.log("bar-add.component.ts");
                 console.log(bar);

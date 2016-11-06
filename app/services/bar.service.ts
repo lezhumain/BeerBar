@@ -14,7 +14,8 @@ export class BarService {
     //private barsUrl = 'https://localhost:8443/bars';  // URL to web api
     //private barsUrl = 'http://davanture.fr:8080/bars';  // URL to web api
     private wildcard: string = "%";
-    private baseUrl: string = "http://localhost:8080";
+    //private baseUrl: string = "http://localhost:8080";
+    private baseUrl: string = "http://davanture.fr:8080";
     private barsUrl; // URL to web api
     private addBeerUrl;
 
@@ -61,10 +62,11 @@ export class BarService {
     }
 
     //createBar(bar: Bar): Promise<Bar> {
-    createBar(name: string): Promise<Bar> {
+    createBar(bar: Bar): Promise<Bar> {
         // TODO pass bar as param
         //var data = "{\"name\": \"" + name +  "\"}";
-        var data = name;
+        //var data = name;
+        var data = JSON.stringify(bar);
 
         return this.http
             .post(this.barsUrl, data, {headers: this.headers, withCredentials: true})
@@ -98,14 +100,12 @@ export class BarService {
         let barName = bar.name.replace(" ", "+");
         let url = this.addBeerUrl.replace(this.wildcard, barName);
 
-        debugger;
         return this.http
             .post(url, body, {headers: this.headers, withCredentials: true})
             .toPromise()
             //.then(res => res.json().data)
             .then(function(res)
             {
-                debugger;
                 console.log(res);
                 return res.json();
             })

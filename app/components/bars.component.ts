@@ -5,6 +5,7 @@ import { BarService } from '../services/bar.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import {Observable} from "rxjs/Observable";
 import {CustomMapComponent} from "./custom-map.component";
+import {Input} from "../../node_modules/@angular/core/src/metadata/directives";
 
 
 @Component({
@@ -19,7 +20,10 @@ import {CustomMapComponent} from "./custom-map.component";
 export class BarsComponent implements OnInit
 {
     selectedBar: Bar;
-    bars: Bar[];
+
+    public static bars: Bar[];
+
+
     filteredBars: Array<Bar>;
     toRemove: number[];
     filterValue: string;
@@ -36,10 +40,10 @@ export class BarsComponent implements OnInit
     getBars(): void {
         var self = this;
         this.barService.getBars()
-            //.then(bars => this.bars = bars);
+            //.then(bars => BarsComponent.bars = bars);
             .then( bars =>
             {
-                self.bars = bars;
+                BarsComponent.bars = bars;
 
                 if(!self.hasFilter())
                 {
@@ -92,7 +96,7 @@ export class BarsComponent implements OnInit
     //    if (!name) { return; }
     //    this.barService.create(name)
     //        .then(bar => {
-    //            //this.bars.push(bar);
+    //            //BarsComponent.bars.push(bar);
     //            this.selectedBar = null;
     //            this.getBars();
     //        });
@@ -102,14 +106,14 @@ export class BarsComponent implements OnInit
     //    this.barService
     //        .delete(bar.id)
     //        .then(() => {
-    //            this.bars = this.bars.filter(h => h !== bar);
+    //            BarsComponent.bars = BarsComponent.bars.filter(h => h !== bar);
     //            if (this.selectedBar === bar) { this.selectedBar = null; }
     //        });
     //}
 
     search(searchValue : string): void {
         var self = this;
-        this.bars.forEach(function(item, index)
+        BarsComponent.bars.forEach(function(item, index)
         {
             let id = item.barId;
             let hasThaBeer = false;
@@ -148,7 +152,7 @@ export class BarsComponent implements OnInit
         this.filterValue = undefined;
         //debugger;
 
-        //this.filteredBars = this.bars;
+        //this.filteredBars = BarsComponent.bars;
         //this.setFiltered();
 
         this.getBars();
@@ -163,7 +167,7 @@ export class BarsComponent implements OnInit
         this.filteredBars = [];
 
         if(!theBars)
-            theBars = this.bars;
+            theBars = BarsComponent.bars;
 
         var self = this;
         theBars.forEach(function(item)

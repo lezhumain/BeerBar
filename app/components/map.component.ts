@@ -9,6 +9,7 @@ import {CustomMapComponent} from "./custom-map.component";
 import {UserService} from "../services/user.service";
 import {Router} from "@angular/router";
 import Timer = NodeJS.Timer;
+import {Bar} from "../model/bar";
 
 //import {MyCustomMapsComponent} from "./my-custom-maps.component";
 //import {CustomMapComponent} from "./custom-map.component";
@@ -210,7 +211,12 @@ export class MapComponent {
 	{
 		barName = barName.trim();
 		if (!barName) { return; }
-		this.service.createBar(barName)
+
+		let b = new Bar();
+		b.name = barName;
+		// TODO city
+
+		this.service.createBar(b)
 			.then(bar => {
                 alert("Le bar a été ajouté.");
 			})

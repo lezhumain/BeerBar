@@ -7,8 +7,8 @@ import {User} from "../model/user";
  */
 @Injectable()
 export class UserService {
-    private userUrl = 'http://localhost:8080/login';  // URL to web api
-    //private userUrl = 'http://davanture.fr:8080/login';  // URL to web api
+    //private userUrl = 'http://localhost:8080/login';  // URL to web api
+    private userUrl = 'http://davanture.fr:8080/login';  // URL to web api
     private headers = new Headers({'Content-Type': 'application/json'});
     private static loggedIn = false;
 
