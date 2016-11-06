@@ -55,6 +55,7 @@ export class BeerAddComponent implements OnInit {
     };
 
     save(name: string, degre: number): void {
+        let self = this;
         this.beer.name = name;
         this.beer.degree = degre ? degre : 0;
         // console.log(this.beer);
@@ -67,14 +68,23 @@ export class BeerAddComponent implements OnInit {
             return;
         }
 
-        // let self = this;
-        console.log("method commented out");
-        //this.barService.update(this.bar)
-        //    .then(bar => {
-        //        console.log("beer-add.component.ts");
-        //        console.log(bar);
-        //        //debugger;
-        //        self.navigate("/detail/" + this.bar.id);
-        //    });
+
+        //console.log("method commented out");
+//        this.barService.updateBar(this.bar)
+//            .then(bar => {
+//                console.log("beer-add.component.ts");
+//                console.log(bar);
+//                //debugger;
+//                self.navigate("/detail/" + this.bar.id);
+//            });
+
+        // TODO review this
+        this.barService.addBeer(this.bar, this.beer)
+            .then(bar => {
+                console.log("beer-add.component.ts");
+                console.log(bar);
+                //debugger;
+                self.navigate("/detail/" + this.bar.barId);
+            });
     }
 }

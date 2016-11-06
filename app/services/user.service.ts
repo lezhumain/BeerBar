@@ -7,7 +7,8 @@ import {User} from "../model/user";
  */
 @Injectable()
 export class UserService {
-    private userUrl = 'http://192.168.1.108:8080/login';  // URL to web api
+    private userUrl = 'http://localhost:8080/login';  // URL to web api
+    //private userUrl = 'http://davanture.fr:8080/login';  // URL to web api
     private headers = new Headers({'Content-Type': 'application/json'});
     private static loggedIn = false;
 
@@ -32,7 +33,7 @@ export class UserService {
 
         var ok = false;
         var data = "{\"username\":\"" + name + "\",\"password\":\"" + pass + "\"}";
-        debugger;
+
         //UserService.users.forEach(function(elem, index)
         //{
         //    // console.log(elem);
@@ -44,7 +45,7 @@ export class UserService {
         //});
 
         return this.http
-            .post(this.userUrl, data, {headers: this.headers})
+            .post(this.userUrl, data, {headers: this.headers, withCredentials: true})
             .toPromise()
             .then( res =>
             {

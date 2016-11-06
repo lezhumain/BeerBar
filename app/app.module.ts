@@ -17,7 +17,6 @@ import {BeerAddComponent} from "./components/beer-add.component";
 import {MapComponent} from "./components/map.component";
 
 import { AgmCoreModule } from 'angular2-google-maps/core';
-import {GoomapService} from "./services/goomap.service";
 import {MyCustomMapsComponent} from "./components/my-custom-maps.component";
 import {CustomMapComponent} from "./components/custom-map.component";
 import {LoginComponent} from "./components/login.component";
@@ -51,8 +50,7 @@ import {LoggedInRouterOutlet} from "./logged-in-router-outlet";
     ],
 	providers: [
 		BarService,
-		UserService,
-		GoomapService
+		UserService
 	],
 	bootstrap: [ AppComponent ]
 })

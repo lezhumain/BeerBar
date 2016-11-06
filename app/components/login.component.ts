@@ -57,10 +57,9 @@ export class LoginComponent implements OnInit {
         }
 
         let self = this;
-        console.log("method commented out\n\tlogin: " + name + "\n\tpass: " + pass);
+        //console.log("method commented out\n\tlogin: " + name + "\n\tpass: " + pass);
         this.userService.login(name, pass)
             .then(user => {
-                debugger;
                 if(user.token.length > 0)
                 {
                     console.log("ok");

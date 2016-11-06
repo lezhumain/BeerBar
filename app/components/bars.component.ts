@@ -69,6 +69,8 @@ export class BarsComponent implements OnInit
             {
                 console.log("An error occured.");
                 console.log(param);
+
+                self.router.navigate(['/login']);
             });
     };
 
@@ -126,7 +128,6 @@ export class BarsComponent implements OnInit
             }
         });
 
-        debugger;
         let length = this.filteredBars.length;
         for(let i = 0; i < length; ++i)
         {
