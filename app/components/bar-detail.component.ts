@@ -65,7 +65,7 @@ export class BarDetailComponent implements OnInit {
             .then(function(value){
                 console.log(value);
                 self.bar = value;
-                debugger;
+                // debugger;
             })
             .catch(function(value){
                 console.log("ERROR");

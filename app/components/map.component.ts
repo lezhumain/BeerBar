@@ -242,10 +242,6 @@ export class MapComponent {
 		this.router.navigate([url]);
 	};
 
-	private test(elem: any): void {
-		debugger;
-	}
-
 	private placesHack(radius?: number): void
 	{
 		//var map;

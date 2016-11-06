@@ -92,21 +92,11 @@ export class BarAddComponent implements OnInit {
 
     private onCreateError(param: any)
     {
-        debugger;
+        //debugger;
         console.log("error");
         console.log(param);
 
         this.showError = true;
 
-    }
-
-    test(event: any): void
-    {
-        debugger;
-    }
-
-    test1(e : any): void
-    {
-        debugger;
     }
 }
