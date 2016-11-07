@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
 import {Http} from "@angular/http";
-import {Bar} from "../model/bar";
 import {BaseService} from "./base.service";
 import {IGeoloc} from "../model/igeoloc";
 /**
@@ -26,7 +25,7 @@ export class GeolocService extends BaseService
     {
         var self = this;
 
-        let url = "http://freegeoip.net/json/";
+        let url = "https://freegeoip.net/json/";
 
         return this.http.get(url, { withCredentials: true })
             .toPromise()
@@ -45,5 +44,10 @@ export class GeolocService extends BaseService
     public GetCity(): string
     {
         return this.geolocInfos.city;
+    }
+
+    public GetPostalCode(): string
+    {
+        return this.geolocInfos.region_code;
     }
 }

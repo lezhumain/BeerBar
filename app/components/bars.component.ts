@@ -1,11 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {Bar} from "../model/bar";
-import { OnInit } from '@angular/core';
-import { BarService } from '../services/bar.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import {Observable} from "rxjs/Observable";
-import {CustomMapComponent} from "./custom-map.component";
-import {Input} from "../../node_modules/@angular/core/src/metadata/directives";
+import {BarService} from "../services/bar.service";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -13,8 +9,7 @@ import {Input} from "../../node_modules/@angular/core/src/metadata/directives";
 
     templateUrl:'app/views/bars.component.html',
     styleUrls:  ['app/styles/bars.component.css'],
-    providers: [BarService],
-    //directives: [CustomMapComponent]
+    providers: [BarService]
 })
 
 export class BarsComponent implements OnInit
@@ -40,31 +35,13 @@ export class BarsComponent implements OnInit
     getBars(): void {
         var self = this;
         this.barService.getBars()
-            //.then(bars => BarsComponent.bars = bars);
             .then( bars =>
             {
                 BarsComponent.bars = bars;
 
                 if(!self.hasFilter())
                 {
-
-                    //self.filteredBars = bars;
                     self.setFiltered(bars);
-
-                    //self.filteredBars = new Observable<Bar>(observer => {
-                    //    setTimeout(() => {
-                    //        observer.next(42);
-                    //    }, 1000);
-                    //
-                    //    setTimeout(() => {
-                    //        observer.next(43);
-                    //    }, 2000);
-                    //
-                    //    setTimeout(() => {
-                    //        observer.complete();
-                    //    }, 3000);
-                    //});
-
                 }
                 else
                     self.search(self.filterValue);
@@ -89,27 +66,6 @@ export class BarsComponent implements OnInit
         this.getBars();
         this.toRemove = [];
     };
-
-
-    //add(name: string): void {
-    //    name = name.trim();
-    //    if (!name) { return; }
-    //    this.barService.create(name)
-    //        .then(bar => {
-    //            //BarsComponent.bars.push(bar);
-    //            this.selectedBar = null;
-    //            this.getBars();
-    //        });
-    //};
-
-    //delete(bar: Bar): void {
-    //    this.barService
-    //        .delete(bar.id)
-    //        .then(() => {
-    //            BarsComponent.bars = BarsComponent.bars.filter(h => h !== bar);
-    //            if (this.selectedBar === bar) { this.selectedBar = null; }
-    //        });
-    //}
 
     search(searchValue : string): void {
         var self = this;
@@ -148,12 +104,7 @@ export class BarsComponent implements OnInit
     }
 
     removeFilter(): void{
-        //debugger;
         this.filterValue = undefined;
-        //debugger;
-
-        //this.filteredBars = BarsComponent.bars;
-        //this.setFiltered();
 
         this.getBars();
     }

@@ -1,20 +1,12 @@
-import {Component} from '@angular/core';
-//import {LazyMapsAPILoaderConfig} from "angular2-google-maps/core";
-import * as mapTypes from 'angular2-google-maps/core/services/google-maps-types';
-
-import { GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
+import {Component} from "@angular/core";
+import * as mapTypes from "angular2-google-maps/core/services/google-maps-types";
+import {GoogleMapsAPIWrapper} from "angular2-google-maps/core";
 import {BarService} from "../services/bar.service";
 import {IMarker} from "../model/imarker";
-import {CustomMapComponent} from "./custom-map.component";
-import {UserService} from "../services/user.service";
 import {Router} from "@angular/router";
-import Timer = NodeJS.Timer;
 import {Bar} from "../model/bar";
 import {GeolocService} from "../services/geoloc.service";
-
-//import {MyCustomMapsComponent} from "./my-custom-maps.component";
-//import {CustomMapComponent} from "./custom-map.component";
-
+import Timer = NodeJS.Timer;
 
 @Component({
 	selector: 'mymap',
@@ -23,10 +15,6 @@ import {GeolocService} from "../services/geoloc.service";
 	providers: [GoogleMapsAPIWrapper]
 })
 
-//export interface Window {
-//	google: any;
-//}
-
 export class MapComponent {
 	title: string = 'Bars autour de moi';
 
@@ -34,12 +22,9 @@ export class MapComponent {
 	lng: number = 0;
 	zoom: number = 16;
 	geoloc: Coordinates;
-	//mapService: GoomapService;
 	map: mapTypes.GoogleMap;
 	markers: IMarker[];
-	//positionIconUrl: string = "http://www.googlemapsmarkers.com/v1/P/0099FF/";
 	positionIconUrl: string = "https://www.robotwoods.com/dev/misc/bluecircle.png";
-	//info: string = "";
 	searchRadius: number = 500;
 
 	runsHttps: boolean = false;
@@ -51,36 +36,22 @@ export class MapComponent {
 
 	static locationCallsCount: number = 0;
 
-	constructor(private _wrapper: GoogleMapsAPIWrapper,
-				private service: BarService,
+	constructor(private service: BarService,
 				private geolocService: GeolocService,
 				private router: Router)
 	{
 		this.runsHttps = window.location.protocol.indexOf("https") !== -1;
 		this.runsLocalhost = window.location.hostname === "localhost";
-		//this.runsLocalhost = false;
 
-		//debugger;
-		//this.mapService = service;
 		this.markers = [];
 
 		// set active class for menu
 		let ulMenu = document.getElementsByTagName("ul")[0];
 		ulMenu.children[0].className="";
 		ulMenu.children[1].className="active";
-
-		/*
-		let self = this;
-		this._wrapper.getNativeMap().then((m) => {
-			self.map = m;
-			//console.log(m);
-		});
-		*/
-
 	};
 
 	ngOnInit(): void {
-		//debugger;
 		this.getLocation();
 
 		var self = this;
@@ -99,7 +70,6 @@ export class MapComponent {
 
 	private clickedMarker(label: string, index: number) {
 		console.log(`clicked the marker: ${label || index}`);
-		//this.InfoWindowContent = label;
 	}
 
 	private onGotLocation(position: Position, self: MapComponent): void
@@ -227,8 +197,15 @@ export class MapComponent {
 		this.service.createBar(b)
 			.then(bar => {
                 self.addSuccess = true;
-                this.isLoading = false;
+				self.isLoading = false;
                 setTimeout(function() { self.addSuccess = undefined; }, 5000);
+
+
+				self.markers.forEach(function(item, index)
+				{
+					if(item.label === bar.name)
+						item.inApp = true;
+				});
 			})
             .catch( param =>
             {
@@ -242,8 +219,7 @@ export class MapComponent {
 		this.router.navigate([url]);
 	};
 
-	private placesHack(radius?: number): void
-	{
+	private placesHack(): void {
 		//var map;
 		var infowindow;
 		var self = this;
@@ -263,8 +239,6 @@ export class MapComponent {
 
 			if(mapBody === undefined)
 			{
-				//debugger;
-				//self.navigate("/map");
 				return false;
 			}
 
@@ -283,7 +257,6 @@ export class MapComponent {
 			if(!preInitMap())
 				return false;
 
-			//var pyrmont = {lat: -33.867, lng: 151.195};
 			if(self.geoloc === undefined)
 			{
 				self.getLocation();
@@ -293,7 +266,6 @@ export class MapComponent {
 			var lat = self.geoloc != undefined && self.geoloc.latitude != undefined ? self.geoloc.latitude : 0,
 				lng = self.geoloc != undefined && self.geoloc.longitude != undefined ? self.geoloc.longitude : 0;
 			var currentLoc = {lat: lat, lng: lng};
-			// var radius = 250;
 			var types = ["bar"];
 
 			self.map = new gooogle.maps.Map(document.getElementById('map1'), {
@@ -308,8 +280,6 @@ export class MapComponent {
 				radius: self.searchRadius,
 				types: types
 			};
-			// console.log("nearby params:");
-			// console.log(params);
 
 			let service = new gooogle.maps.places.PlacesService(self.map);
 			console.log("nearby params");
@@ -321,7 +291,6 @@ export class MapComponent {
 
 		var createMarker = function(data, self)
 		{
-			//console.log(data);
 			var isInApp = self.service.barExists(data.name);
 
 			var marker = {
@@ -346,24 +315,9 @@ export class MapComponent {
 				 {
 					createMarker(results[i], self);
 				 }
-
-				console.log("Got markers");
 			}
 		};
 
-		// TODO check this
-		// let done: boolean = false;
-		// let cpt: number = 0,
-		//	 max: number  = 10;
-		// while(!done && cpt < max) {
-		//	 done = initMap();
-		//	 cpt++;
-		// }
 		initMap();
 	}
-
-	// notInApp(barName: string): boolean
-	// {
-	// 	return this.service.barExists(barName);
-	// }
 }

@@ -1,10 +1,6 @@
 // Keep the Input import for now, we'll remove it later:
-import { Component, Input, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-
-import { BarService } from '../services/bar.service';
-import {Beer} from "../model/beer";
-import {Bar} from "../model/bar";
+import {Component, Input, OnInit} from "@angular/core";
+import {Router, ActivatedRoute} from "@angular/router";
 import {UserService} from "../services/user.service";
 
 @Component({
@@ -19,9 +15,7 @@ export class LoginComponent implements OnInit {
     showLoginError: boolean = false;
 
 
-    constructor(
-        private route: ActivatedRoute,
-        private router: Router,
+    constructor(private router: Router,
         private userService: UserService)
     {
         // set active class for menu
@@ -57,7 +51,6 @@ export class LoginComponent implements OnInit {
         }
 
         let self = this;
-        //console.log("method commented out\n\tlogin: " + name + "\n\tpass: " + pass);
         this.userService.login(name, pass)
             .then(user => {
                 if(user.token.length > 0)

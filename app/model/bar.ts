@@ -11,7 +11,6 @@ export class Bar {
     latitude: number;
     longitude: number;
     description: string;
-    //beers: Beer[];
     listBeer: Beer[];
 
     constructor()

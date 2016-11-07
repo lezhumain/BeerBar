@@ -39,7 +39,7 @@ export class BeerAddComponent implements OnInit {
                 BeerAddComponent.goBack();
 
             this.barName = atob(name);
-            //debugger;
+
             this.barService.getBarByName(this.barName)
                 .then(bar => this.bar = bar);
         });
@@ -69,21 +69,10 @@ export class BeerAddComponent implements OnInit {
         }
 
 
-        //console.log("method commented out");
-//        this.barService.updateBar(this.bar)
-//            .then(bar => {
-//                console.log("beer-add.component.ts");
-//                console.log(bar);
-//                //debugger;
-//                self.navigate("/detail/" + this.bar.id);
-//            });
-
-        // TODO review this
         this.barService.addBeer(this.bar, this.beer)
             .then(bar => {
                 console.log("beer-add.component.ts");
                 console.log(bar);
-                //debugger;
                 self.navigate("/detail/" + this.bar.barId);
             });
     }

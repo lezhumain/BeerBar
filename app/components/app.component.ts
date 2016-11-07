@@ -2,12 +2,8 @@
  * Created by Dju on 09/09/2016.
  */
 import { Component } from '@angular/core';
-import {MyCustomMapsComponent} from "./my-custom-maps.component";
-import {LoggedInRouterOutlet} from "../logged-in-router-outlet";
 import {UserService} from "../services/user.service";
 import {Router} from "@angular/router";
-import {GeolocService} from "../services/geoloc.service";
-import {IGeoloc} from "../model/igeoloc";
 
 @Component({
     selector: 'my-app',
@@ -22,27 +18,19 @@ import {IGeoloc} from "../model/igeoloc";
     template: `
         <header>
             <ul class="nav nav-pills">
-                <!--TODO why no routerLink?-->
                 <li role="presentation" class="active"><a routerLink="/bars">Bars</a></li>
                 <li role="map"><a routerLink="/map">Map</a></li>
             </ul>
         </header>
         <div class="content">
             <router-outlet (activate)='onRouteChange($event)' ></router-outlet>
-            <!--<router-outlet></router-outlet>-->
-            
-            
-            <!--<loggedin-router-outlet></loggedin-router-outlet>-->
-            <!--<router-outlet [geoloc]="{{location}}"></router-outlet>-->
         </div>
     `,
-    // directives: [LoggedInRouterOutlet]
 })
 
 export class AppComponent {
     title: string = 'Tour of Bars';
     loggedIn: boolean = false;
-    // private static sGeolocService: GeolocService = null;
 
 
     constructor(
@@ -60,23 +48,13 @@ export class AppComponent {
             loggedIn: boolean = this.userService.isLoggedIn() || ( window["loggedIn"] !== undefined && window["loggedIn"] === true),
             canAccess: boolean = loginRoute || loggedIn;
 
-        // debugger;
         if(!canAccess)
         {
-            // debugger;
-            //event.router.navigate(["/login"]);
+            event.router.navigate(["/login"]);
         }
         else if(this.userService.isLoggedIn()) {
             window["loggedIn"] = true;
             this.loggedIn = true;
         }
     }
-
-    // public static GetCity(): string
-    // {
-    //     if(AppComponent.city == null)
-    //         AppComponent.city = AppComponent.retrieveCity();
-    //
-    //     return AppComponent.city;
-    // }
 }

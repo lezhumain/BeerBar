@@ -1,8 +1,7 @@
 // Keep the Input import for now, we'll remove it later:
-import { Component, Input, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-
-import { BarService } from '../services/bar.service';
+import {Component, Input, OnInit} from "@angular/core";
+import {Router, ActivatedRoute, Params} from "@angular/router";
+import {BarService} from "../services/bar.service";
 import {Bar} from "../model/bar";
 
 @Component({
@@ -31,7 +30,7 @@ export class BarDetailComponent implements OnInit {
         // get id from url?
         this.route.params.forEach((params: Params) => {
             let id = +params['id'];
-            //var self = this;
+
             this.barService.getBar(id)
                 .then(bar => this.bar = bar);
         });
@@ -56,18 +55,11 @@ export class BarDetailComponent implements OnInit {
         var self = this;
 
         this.barService.updateBar(this.bar)
-            /*
-            .then(value => {
-                console.log(value);
-                debugger;
-            });
-            */
             .then(function(value){
                 console.log(value);
                 self.bar = value;
-                // debugger;
             })
-            .catch(function(value){
+            .catch(function () {
                 console.log("ERROR");
                 console.log("ERROR");
                 console.log("ERROR");
@@ -77,15 +69,13 @@ export class BarDetailComponent implements OnInit {
     gotoCreateBeer(): void
     {
         let barName = btoa(this.bar.name).replace("=", "%%");
-        //let url = "/beer/create?bar=" + barName;
         let url = "/beer/create/" + barName;
-        //debugger;
         this.navigate(url);
     };
 
     save(): void {
-        console.log("method commented out");
-        //this.barService.update(this.bar)
-        //    .then(this.goBack);
+        // console.log("method commented out");
+        this.barService.updateBar(this.bar)
+           .then(() => {this.navigate("/bars");});
     }
 }

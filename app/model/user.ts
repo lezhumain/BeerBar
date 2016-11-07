@@ -1,4 +1,3 @@
-import {Beer} from "./beer";
 /**
  * Created by ThaZalman on 15/10/2016.
  */

@@ -1,4 +1,4 @@
 {
-    "https" : false,
+    "https" : true,
     "browser" : ["firefox"]
 }
